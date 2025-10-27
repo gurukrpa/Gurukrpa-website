@@ -5,11 +5,59 @@ import Wordmark from '@/components/Wordmark'
 
 const cinzel = Cinzel({ subsets: ['latin'], weight: ['900'] })
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { FaWhatsapp, FaPhone, FaEnvelope } from 'react-icons/fa'
+import { supabase } from '@/lib/supabase'
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('')
+  const [user, setUser] = useState<{ full_name?: string; email?: string } | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    // Check if user is logged in (robust: try getUser first, then getSession)
+    const loadUser = async () => {
+      try {
+        const { data: userRes } = await supabase.auth.getUser()
+        if (userRes?.user) {
+          const fullName = userRes.user.user_metadata?.full_name || userRes.user.email?.split('@')[0]
+          setUser({ full_name: fullName, email: userRes.user.email || undefined })
+          setLoading(false)
+          return
+        }
+        const { data: { session } } = await supabase.auth.getSession()
+        if (session?.user) {
+          const fullName = session.user.user_metadata?.full_name || session.user.email?.split('@')[0]
+          setUser({ full_name: fullName, email: session.user.email || undefined })
+        }
+      } finally {
+        setLoading(false)
+      }
+    }
+    loadUser()
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log('Auth state changed:', event, session) // Debug log
+      if (session?.user) {
+        const fullName = session.user.user_metadata?.full_name || session.user.email?.split('@')[0]
+        setUser({
+          full_name: fullName,
+          email: session.user.email
+        })
+      } else {
+        setUser(null)
+      }
+      setLoading(false)
+    })
+
+    return () => subscription.unsubscribe()
+  }, [])
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut()
+    setUser(null)
+  }
 
   return (
     <>
@@ -36,12 +84,37 @@ export default function Home() {
               <Link href="/contact" className="hover:text-yellow-200 transition">Contact</Link>
             </nav>
             <div className="flex space-x-4">
-              <Link href="/auth/signup" className="bg-white px-4 py-2 rounded-lg font-semibold hover:bg-yellow-100 transition" style={{color: '#FFA07A'}}>
-                Sign Up
-              </Link>
-              <Link href="/auth/login" className="text-white px-4 py-2 rounded-lg font-semibold transition" style={{backgroundColor: '#FF8C69'}}>
-                Login
-              </Link>
+              {user ? (
+                <>
+                  <span className="text-white px-4 py-2 rounded-lg font-semibold">
+                    Welcome, {user.full_name}
+                  </span>
+                  {user.email?.toLowerCase().includes('admin') && (
+                    <Link 
+                      href="/admin/dashboard"
+                      className="bg-yellow-400 text-orange-900 px-4 py-2 rounded-lg font-semibold hover:bg-yellow-300 transition"
+                    >
+                      Admin
+                    </Link>
+                  )}
+                  <button 
+                    onClick={handleLogout}
+                    className="bg-white px-4 py-2 rounded-lg font-semibold hover:bg-yellow-100 transition" 
+                    style={{color: '#FFA07A'}}
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link href="/auth/signup" className="bg-white px-4 py-2 rounded-lg font-semibold hover:bg-yellow-100 transition" style={{color: '#FFA07A'}}>
+                    Sign Up
+                  </Link>
+                  <Link href="/auth/login" className="text-white px-4 py-2 rounded-lg font-semibold transition" style={{backgroundColor: '#FF8C69'}}>
+                    Login
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>

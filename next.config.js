@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
+const isProd = process.env.NODE_ENV === 'production'
 const nextConfig = {
-  reactStrictMode: true,
+  // Enable Strict Mode only in production to avoid double-invocation flicker in dev
+  reactStrictMode: isProd,
   images: {
     domains: ['yavokvrcskbxhotpcejo.supabase.co'],
   },

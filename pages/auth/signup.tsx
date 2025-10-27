@@ -1,4 +1,4 @@
-import { useState, FormEvent } from 'react'
+import { useState, useEffect, FormEvent, useRef } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Head from 'next/head'
@@ -9,6 +9,20 @@ import Wordmark from '@/components/Wordmark'
 const cinzel = Cinzel({ subsets: ['latin'], weight: ['900'] })
 import { supabase } from '@/lib/supabase'
 import { FaStar, FaQuestionCircle, FaCalendarCheck, FaPrayingHands, FaHeart, FaBaby, FaChalkboardTeacher, FaUsers } from 'react-icons/fa'
+
+// Services list defined at module scope to avoid recreating on every render
+const services = [
+  { name: 'Astrology Consultation', Icon: FaStar },
+  { name: 'Prashna Consultation', Icon: FaQuestionCircle },
+  { name: 'Muhurtha Consultation', Icon: FaCalendarCheck },
+  { name: 'Group Pooja/Homa Participation', Icon: FaPrayingHands },
+  { name: 'Custom Pooja Ceremony', Icon: FaPrayingHands },
+  { name: 'Marriage Match Making', Icon: FaHeart },
+  { name: 'Garbha Sanskar Astrology', Icon: FaBaby },
+  { name: 'Prashna One-on-One Classes', Icon: FaQuestionCircle },
+  { name: 'Astrology One-on-One Classes', Icon: FaChalkboardTeacher },
+  { name: 'Astro/Prashna Group Class', Icon: FaUsers },
+] as const
 
 export default function SignUp() {
   const router = useRouter()
@@ -25,19 +39,36 @@ export default function SignUp() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
+  const [selectedServices, setSelectedServices] = useState<string[]>([])
+  const [servicesOpen, setServicesOpen] = useState(false)
+  const [serviceQuery, setServiceQuery] = useState('')
+  const dropdownRef = useRef<HTMLDivElement | null>(null)
 
-  // Small services list to show as cute tiles (2 rows)
-  const services = [
-    { name: 'Astrology Consultation', Icon: FaStar },
-    { name: 'Prashna Consultation', Icon: FaQuestionCircle },
-    { name: 'Muhurtha Consultation', Icon: FaCalendarCheck },
-    { name: 'Pooja / Homa Live', Icon: FaPrayingHands },
-    { name: 'Marriage Match Making', Icon: FaHeart },
-    { name: 'Garbha Sanskar Astrology', Icon: FaBaby },
-    { name: 'Prashna One-on-One Classes', Icon: FaQuestionCircle },
-    { name: 'Astrology One-on-One Classes', Icon: FaChalkboardTeacher },
-    { name: 'Group Class Consultation', Icon: FaUsers },
-  ] as const
+  // Small services list shown as tiles (moved to module scope for stability)
+
+  const toggleService = (serviceName: string) => {
+    setSelectedServices(prev => 
+      prev.includes(serviceName)
+        ? prev.filter(s => s !== serviceName)
+        : [...prev, serviceName]
+    )
+  }
+
+  const clearServices = () => setSelectedServices([])
+  const selectAllServices = () => setSelectedServices(services.map(s => s.name))
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (!servicesOpen) return
+      const target = e.target as Node
+      if (dropdownRef.current && !dropdownRef.current.contains(target)) {
+        setServicesOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [servicesOpen])
 
   const handleSignUp = async (e: FormEvent) => {
     e.preventDefault()
@@ -45,10 +76,12 @@ export default function SignUp() {
     setError(null)
 
     try {
+      const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL as string) || window.location.origin
       const { data, error: signUpError } = await supabase.auth.signUp({
         email,
         password,
         options: {
+          emailRedirectTo: `${baseUrl}/`,
           data: {
             full_name: fullName,
             phone: phone,
@@ -58,11 +91,14 @@ export default function SignUp() {
             address: address,
             occupation: occupation,
             referred_by: referredBy,
+            selected_services: selectedServices,
           },
         },
       })
 
       if (signUpError) throw signUpError
+
+      console.log('Signup data:', data) // Debug log
 
       if (data.user) {
         // Insert user data into users table
@@ -80,12 +116,15 @@ export default function SignUp() {
         if (insertError && insertError.code !== '23505') {
           console.error('Error inserting user:', insertError)
         }
-
-        setSuccess(true)
-        setTimeout(() => {
-          router.push('/auth/login')
-        }, 2000)
       }
+
+      console.log('Session after signup:', data.session) // Debug log
+
+      // Show success message - user is now signed in automatically (if email confirmation is disabled)
+      setSuccess(true)
+      setTimeout(() => {
+        router.push('/')
+      }, 8000)
     } catch (err: any) {
       setError(err.message || 'An error occurred during sign up')
     } finally {
@@ -107,18 +146,70 @@ export default function SignUp() {
                 <Image src="/images/gurukrpa-logo.jpg" alt="Gurukrpa Logo" fill sizes="80px" className="object-cover" style={{ transform: 'scale(1.07)' }} priority />
               </div>
               <Wordmark className="text-4xl md:text-5xl mb-2" />
-              <h2 className="text-2xl font-semibold text-gray-800">Astrology Consultation Registration</h2>
-              <p className="text-gray-600 mt-2">Begin your spiritual journey with personalized guidance</p>
-              {/* Cute services tiles - 2 rows on md+ */}
-              <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
-                {services.map(({ name, Icon }) => (
-                  <div key={name} className="flex items-center space-x-3 rounded-xl border border-orange-100 bg-orange-50/60 px-3 py-3 hover:shadow-md transition">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-full" style={{ background: '#FFA07A' }}>
-                      <Icon className="text-white" size={18} />
+              {/* Service Selection (Dropdown multi-select) */}
+              <div className="mt-4" ref={dropdownRef}>
+                <h3 className="text-base font-semibold text-gray-800 mb-2">Select Services You're Interested In:</h3>
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={() => setServicesOpen(o => !o)}
+                    className={`w-full flex items-center justify-between rounded-lg border px-4 py-3 text-left bg-white ${selectedServices.length === 0 ? 'border-gray-300' : 'border-orange-400'}`}
+                  >
+                    <span className="text-gray-700 truncate">
+                      {selectedServices.length === 0 ? 'Choose one or more services' : `${selectedServices.length} selected`}
+                    </span>
+                    <svg className={`w-4 h-4 ml-2 transition-transform ${servicesOpen ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.048l3.71-3.817a.75.75 0 111.08 1.04l-4.24 4.368a.75.75 0 01-1.08 0L5.25 8.27a.75.75 0 01-.02-1.06z" clipRule="evenodd" />
+                    </svg>
+                  </button>
+
+                  {servicesOpen && (
+                    <div className="absolute z-20 mt-2 w-full rounded-lg border border-orange-200 bg-white shadow-lg">
+                      <div className="p-2 border-b bg-orange-50 border-orange-100">
+                        <input
+                          type="text"
+                          value={serviceQuery}
+                          onChange={(e) => setServiceQuery(e.target.value)}
+                          placeholder="Search services..."
+                          className="w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-1 focus:ring-orange-500"
+                        />
+                      </div>
+                      <div className="max-h-64 overflow-auto p-2 space-y-1">
+                        {services
+                          .filter(s => s.name.toLowerCase().includes(serviceQuery.trim().toLowerCase()))
+                          .map(({ name, Icon }) => (
+                            <label key={name} className="flex items-center gap-3 p-2 rounded-md hover:bg-orange-50 cursor-pointer">
+                              <input
+                                type="checkbox"
+                                className="h-4 w-4 text-orange-600"
+                                checked={selectedServices.includes(name)}
+                                onChange={() => toggleService(name)}
+                              />
+                              <span className="flex items-center gap-2 text-sm text-gray-800">
+                                <span className="inline-flex items-center justify-center h-6 w-6 rounded-full bg-orange-300"><Icon size={12} className="text-white" /></span>
+                                {name}
+                              </span>
+                            </label>
+                          ))}
+                        {services.filter(s => s.name.toLowerCase().includes(serviceQuery.trim().toLowerCase())).length === 0 && (
+                          <div className="p-3 text-xs text-gray-500">No matches</div>
+                        )}
+                      </div>
+                      <div className="flex items-center justify-between p-2 border-t bg-gray-50">
+                        <button type="button" className="text-xs text-gray-600 hover:text-gray-800" onClick={clearServices}>Clear</button>
+                        <div className="space-x-2">
+                          <button type="button" className="text-xs text-orange-700 hover:underline" onClick={selectAllServices}>Select all</button>
+                          <button type="button" className="text-xs bg-orange-600 text-white px-3 py-1 rounded" onClick={() => setServicesOpen(false)}>Done</button>
+                        </div>
+                      </div>
                     </div>
-                    <span className="text-sm font-medium text-gray-800">{name}</span>
-                  </div>
-                ))}
+                  )}
+                </div>
+                <p className="text-xs text-gray-500 mt-1.5">
+                  {selectedServices.length === 0
+                    ? 'Please select at least one service'
+                    : selectedServices.slice(0, 3).join(', ') + (selectedServices.length > 3 ? ` +${selectedServices.length - 3} more` : '')}
+                </p>
               </div>
             </div>
 
@@ -129,8 +220,18 @@ export default function SignUp() {
             )}
 
             {success && (
-              <div className="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
-                Account created successfully! Redirecting to login...
+              <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                <div className="bg-white rounded-2xl p-8 max-w-md mx-4 shadow-2xl animate-fadeIn">
+                  <div className="text-center">
+                    <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-4">
+                      <svg className="h-10 w-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-2">Success!</h3>
+                    <p className="text-gray-600">Successfully signed up. Please check your mail for verification.</p>
+                  </div>
+                </div>
               </div>
             )}
 
@@ -289,7 +390,7 @@ export default function SignUp() {
 
               <button
                 type="submit"
-                disabled={loading}
+                disabled={loading || selectedServices.length === 0}
                 className="w-full bg-gradient-to-r from-orange-600 to-orange-500 text-white py-3 px-4 rounded-lg font-semibold hover:from-orange-700 hover:to-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition"
               >
                 {loading ? 'Creating Account...' : 'Sign Up'}

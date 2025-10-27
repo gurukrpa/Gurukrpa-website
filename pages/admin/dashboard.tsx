@@ -8,6 +8,13 @@ interface User {
   email: string
   full_name: string | null
   phone: string | null
+  date_of_birth?: string | null
+  time_of_birth?: string | null
+  place_of_birth?: string | null
+  address?: string | null
+  occupation?: string | null
+  referred_by?: string | null
+  selected_services?: string[] | null
   created_at: string
   last_login: string | null
 }
@@ -33,6 +40,7 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState<'users' | 'bookings'>('users')
   const [searchTerm, setSearchTerm] = useState('')
+  const [serviceStats, setServiceStats] = useState<{ [key: string]: number }>({})
 
   useEffect(() => {
     checkAdmin()
@@ -58,13 +66,38 @@ export default function AdminDashboard() {
 
   const fetchUsers = async () => {
     try {
-      const { data, error } = await supabase
-        .from('users')
-        .select('*')
-        .order('created_at', { ascending: false })
+      // Get current session token
+      const { data: { session } } = await supabase.auth.getSession()
+      if (!session) {
+        console.error('No session found')
+        return
+      }
 
-      if (error) throw error
-      setUsers(data || [])
+      // Call our secure API route that uses service role
+      const response = await fetch('/api/admin/users', {
+        headers: {
+          'Authorization': `Bearer ${session.access_token}`
+        }
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || 'Failed to fetch users')
+      }
+
+      const data = await response.json()
+      setUsers(data.users || [])
+      
+      // Calculate service statistics
+      const stats: { [key: string]: number } = {}
+      data.users?.forEach((user: User) => {
+        if (user.selected_services && Array.isArray(user.selected_services)) {
+          user.selected_services.forEach((service: string) => {
+            stats[service] = (stats[service] || 0) + 1
+          })
+        }
+      })
+      setServiceStats(stats)
     } catch (error) {
       console.error('Error fetching users:', error)
     } finally {
@@ -107,6 +140,20 @@ export default function AdminDashboard() {
     booking.service_name.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
+  // All available services
+  const allServices = [
+    'Astrology Consultation',
+    'Prashna Consultation',
+    'Muhurtha Consultation',
+    'Group Pooja/Homa Participation',
+    'Custom Pooja Ceremony',
+    'Marriage Match Making',
+    'Garbha Sanskar Astrology',
+    'Prashna One-on-One Classes',
+    'Astrology One-on-One Classes',
+    'Astro/Prashna Group Class',
+  ]
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -137,7 +184,34 @@ export default function AdminDashboard() {
           </div>
         </header>
 
-        <div className="container mx-auto px-4 py-8">
+        <div className="flex">
+          {/* Left Sidebar - Services Stats */}
+          <aside className="w-80 bg-white shadow-lg p-6 min-h-screen">
+            <h2 className="text-xl font-bold text-gray-800 mb-4">📊 Services Overview</h2>
+            <div className="space-y-3">
+              {allServices.map((service) => {
+                const count = serviceStats[service] || 0
+                return (
+                  <div key={service} className="flex items-center justify-between p-3 bg-orange-50 rounded-lg hover:bg-orange-100 transition">
+                    <span className="text-sm font-medium text-gray-700 flex-1">{service}</span>
+                    <span className={`px-3 py-1 rounded-full text-sm font-bold ml-2 ${count > 0 ? 'bg-orange-600 text-white' : 'bg-gray-300 text-gray-600'}`}>
+                      {count}
+                    </span>
+                  </div>
+                )
+              })}
+            </div>
+            <div className="mt-6 pt-6 border-t">
+              <div className="text-center">
+                <p className="text-2xl font-bold text-orange-600">{Object.values(serviceStats).reduce((a, b) => a + b, 0)}</p>
+                <p className="text-sm text-gray-600">Total Service Selections</p>
+              </div>
+            </div>
+          </aside>
+
+          {/* Main Content */}
+          <div className="flex-1">
+            <div className="container mx-auto px-4 py-8">
           {/* Stats Cards */}
           <div className="grid md:grid-cols-3 gap-6 mb-8">
             <div className="bg-white p-6 rounded-xl shadow-lg">
@@ -201,8 +275,14 @@ export default function AdminDashboard() {
                         <th className="text-left py-3 px-4 font-semibold text-gray-700">Name</th>
                         <th className="text-left py-3 px-4 font-semibold text-gray-700">Email</th>
                         <th className="text-left py-3 px-4 font-semibold text-gray-700">Phone</th>
+                        <th className="text-left py-3 px-4 font-semibold text-gray-700">DOB</th>
+                        <th className="text-left py-3 px-4 font-semibold text-gray-700">Birth Time</th>
+                        <th className="text-left py-3 px-4 font-semibold text-gray-700">Birth Place</th>
+                        <th className="text-left py-3 px-4 font-semibold text-gray-700">Address</th>
+                        <th className="text-left py-3 px-4 font-semibold text-gray-700">Occupation</th>
+                        <th className="text-left py-3 px-4 font-semibold text-gray-700">Services</th>
+                        <th className="text-left py-3 px-4 font-semibold text-gray-700">Referred By</th>
                         <th className="text-left py-3 px-4 font-semibold text-gray-700">Registered</th>
-                        <th className="text-left py-3 px-4 font-semibold text-gray-700">Last Login</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -211,13 +291,27 @@ export default function AdminDashboard() {
                           <td className="py-3 px-4">{user.full_name || 'N/A'}</td>
                           <td className="py-3 px-4">{user.email}</td>
                           <td className="py-3 px-4">{user.phone || 'N/A'}</td>
+                          <td className="py-3 px-4">{user.date_of_birth || 'N/A'}</td>
+                          <td className="py-3 px-4">{user.time_of_birth || 'N/A'}</td>
+                          <td className="py-3 px-4 max-w-xs truncate" title={user.place_of_birth || 'N/A'}>{user.place_of_birth || 'N/A'}</td>
+                          <td className="py-3 px-4 max-w-xs truncate" title={user.address || 'N/A'}>{user.address || 'N/A'}</td>
+                          <td className="py-3 px-4">{user.occupation || 'N/A'}</td>
+                          <td className="py-3 px-4 max-w-md">
+                            {user.selected_services && user.selected_services.length > 0 ? (
+                              <div className="flex flex-wrap gap-1">
+                                {user.selected_services.map((service, idx) => (
+                                  <span key={idx} className="inline-block px-2 py-1 text-xs bg-orange-100 text-orange-700 rounded">
+                                    {service}
+                                  </span>
+                                ))}
+                              </div>
+                            ) : (
+                              'N/A'
+                            )}
+                          </td>
+                          <td className="py-3 px-4">{user.referred_by || 'N/A'}</td>
                           <td className="py-3 px-4">
                             {new Date(user.created_at).toLocaleDateString('en-IN')}
-                          </td>
-                          <td className="py-3 px-4">
-                            {user.last_login
-                              ? new Date(user.last_login).toLocaleDateString('en-IN')
-                              : 'Never'}
                           </td>
                         </tr>
                       ))}
@@ -277,6 +371,8 @@ export default function AdminDashboard() {
                   </table>
                 </div>
               )}
+            </div>
+          </div>
             </div>
           </div>
         </div>

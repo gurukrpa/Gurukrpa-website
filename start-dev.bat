@@ -1,28 +1,19 @@
 @echo off
-echo ========================================
-echo   Starting Gurukrpa Website...
-echo ========================================
-echo.
+setlocal EnableExtensions EnableDelayedExpansion
 
-REM Check if node_modules exists
-if not exist "node_modules" (
-    echo Dependencies not installed!
-    echo.
-    echo Please run setup.bat first!
-    echo.
-    pause
-    exit /b 1
-)
+REM Ensure we run from the project root (the folder of this script)
+cd /d "%~dp0"
 
-echo Starting development server...
+REM Stable defaults
+set "PORT=3000"
+set "HOST=127.0.0.1"
+set "URL=http://%HOST%:%PORT%"
+set "NODE_VERSION=20.17.0"
+set "NODE_DIR=.tools\node\node-v%NODE_VERSION%-win-x64"
+@echo off
+REM Simple wrapper to launch the reliable PowerShell starter
+setlocal
+cd /d "%~dp0"
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0start-dev.ps1"
+endlocal
 echo.
-echo Website will open at: http://localhost:3000
-echo.
-echo Press Ctrl+C to stop the server
-echo.
-
-REM Start Chrome
-start "" "chrome.exe" "http://localhost:3000"
-
-REM Start dev server with portable Node.js
-.\.tools\node\node-v22.21.0-win-x64\node.exe .\.tools\node\node-v22.21.0-win-x64\node_modules\npm\bin\npm-cli.js run dev

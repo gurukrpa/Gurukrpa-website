@@ -15,6 +15,7 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [resendStatus, setResendStatus] = useState<string | null>(null)
 
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault()
@@ -36,12 +37,33 @@ export default function Login() {
           .update({ last_login: new Date().toISOString() })
           .eq('id', data.user.id)
 
-        router.push('/dashboard')
+        // Redirect: admins to admin dashboard, customers to home
+        if (data.user.email?.toLowerCase().includes('admin')) {
+          router.push('/admin/dashboard')
+        } else {
+          router.push('/')
+        }
       }
     } catch (err: any) {
       setError(err.message || 'An error occurred during login')
     } finally {
       setLoading(false)
+    }
+  }
+
+  const handleResend = async () => {
+    setResendStatus(null)
+    try {
+      if (!email) {
+        setResendStatus('Please enter your email above first.')
+        return
+      }
+      // Resend confirmation for signup
+      const { error } = await supabase.auth.resend({ type: 'signup', email })
+      if (error) throw error
+      setResendStatus('Verification email sent. Please check your inbox/spam.')
+    } catch (e: any) {
+      setResendStatus(e?.message || 'Could not resend verification email.')
     }
   }
 
@@ -66,6 +88,11 @@ export default function Login() {
             {error && (
               <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
                 {error}
+              </div>
+            )}
+            {resendStatus && (
+              <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 text-yellow-800 rounded">
+                {resendStatus}
               </div>
             )}
 
@@ -117,6 +144,12 @@ export default function Login() {
                     Forgot password?
                   </Link>
                 </div>
+              </div>
+
+              <div className="mt-2 text-sm">
+                <button type="button" onClick={handleResend} className="text-orange-600 hover:text-orange-700">
+                  Resend verification email
+                </button>
               </div>
 
               <button
