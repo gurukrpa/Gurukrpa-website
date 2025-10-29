@@ -140,7 +140,7 @@ function CoverflowCarousel() {
                   <div 
                     className="w-full h-full rounded-2xl shadow-2xl overflow-hidden relative"
                     style={{
-                      border: index === currentIndex ? '4px solid #F7C948' : '4px solid transparent',
+                      border: 'none',
                       boxShadow: index === currentIndex 
                         ? '0 20px 60px rgba(0, 150, 136, 0.4)' 
                         : '0 10px 30px rgba(0, 0, 0, 0.3)',
