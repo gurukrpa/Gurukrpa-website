@@ -483,6 +483,52 @@ export default function Home() {
         {/* 3D Coverflow Sacred Images Gallery */}
         <CoverflowCarousel />
 
+        {/* Services Section */}
+        <section className="py-16" style={{ background: 'linear-gradient(to bottom, #ffffff, #E0F5F5)' }}>
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold mb-4" style={{ color: '#009688' }}>Our Sacred Services</h2>
+              <p className="text-xl text-gray-600">Experience divine blessings through our spiritual offerings</p>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+              {[
+                { name: 'Astrology Consultation', slug: 'astrology-consultation', image: '/images/13606540_1643131539348188_4941602659500979600_n.jpg' },
+                { name: 'Prashna Consultation', slug: 'prashna-consultation', image: '/images/153700262_2889422301385766_9145664278903128347_n.jpg' },
+                { name: 'Muhurtha Consultation', slug: 'muhurtha-consultation', image: '/images/172025602_2921021328225863_4034529163949904811_n.jpg' },
+                { name: 'Group Pooja/Homa Participation', slug: 'group-pooja-homa', image: '/images/183549571_2945214632473199_5260788716310171813_n.jpg' },
+                { name: 'Custom Pooja Ceremony', slug: 'custom-pooja-ceremony', image: '/images/35736027_2054892291505442_4237369800285749248_n.jpg' },
+                { name: 'Marriage Match Making', slug: 'marriage-match-making', image: '/images/470128586_3925765744418078_401393879124089351_n.jpg' },
+                { name: 'Garbha Sanskar Astrology', slug: 'garbha-sanskar-astrology', image: '/images/484175213_3999559870371998_8982690694709368337_n.jpg' },
+                { name: 'Prashna One-on-One Classes', slug: 'prashna-classes', image: '/images/484940184_4006514933009825_6626399863205392892_n.jpg' },
+                { name: 'Astrology One-on-One Classes', slug: 'astrology-classes', image: '/images/485032773_4006515239676461_9187027870231540033_n.jpg' },
+                { name: 'Astro/Prashna Group Class', slug: 'astro-prashna-group-class', image: '/images/489730459_4028884424106209_7325051519151063438_n.jpg' },
+              ].map((service, index) => (
+                <Link
+                  key={index}
+                  href={`/services/${service.slug}`}
+                  className="group block bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+                >
+                  <div className="relative h-48 overflow-hidden">
+                    <Image
+                      src={service.image}
+                      alt={service.name}
+                      fill
+                      className="object-cover group-hover:scale-110 transition-transform duration-300"
+                      sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                  </div>
+                  <div className="p-4 bg-gradient-to-b from-teal-50 to-white">
+                    <h3 className="text-center font-semibold text-gray-800 group-hover:text-teal-600 transition-colors" style={{ fontSize: '0.95rem' }}>
+                      {service.name}
+                    </h3>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Stats Section */}
         <section className="py-6 text-white" style={{background: '#088F8F'}}>
           <div className="container mx-auto px-4">
