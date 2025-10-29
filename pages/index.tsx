@@ -67,7 +67,7 @@ export default function Home() {
       </Head>
 
       {/* Header */}
-      <header className="text-white shadow-lg" style={{background: '#FFA07A'}}>
+      <header className="text-white shadow-lg" style={{background: '#088F8F'}}>
         <div className="container mx-auto px-4 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-3">
@@ -77,11 +77,11 @@ export default function Home() {
               <Wordmark className="text-3xl md:text-4xl" />
             </div>
             <nav className="hidden md:flex space-x-6">
-              <Link href="/" className="hover:text-yellow-200 transition">Home</Link>
-              <Link href="/homa" className="hover:text-yellow-200 transition">Homa</Link>
-              <Link href="/puja" className="hover:text-yellow-200 transition">Puja</Link>
-              <Link href="/japa" className="hover:text-yellow-200 transition">Japa</Link>
-              <Link href="/contact" className="hover:text-yellow-200 transition">Contact</Link>
+              <Link href="/" className="hover:text-cyan-200 transition">Home</Link>
+              <Link href="/homa" className="hover:text-cyan-200 transition">Homa</Link>
+              <Link href="/puja" className="hover:text-cyan-200 transition">Puja</Link>
+              <Link href="/japa" className="hover:text-cyan-200 transition">Japa</Link>
+              <Link href="/contact" className="hover:text-cyan-200 transition">Contact</Link>
             </nav>
             <div className="flex space-x-4">
               {user ? (
@@ -92,7 +92,8 @@ export default function Home() {
                   {user.email?.toLowerCase().includes('admin') && (
                     <Link 
                       href="/admin/dashboard"
-                      className="bg-yellow-400 text-orange-900 px-4 py-2 rounded-lg font-semibold hover:bg-yellow-300 transition"
+                      className="bg-yellow-400 px-4 py-2 rounded-lg font-semibold hover:bg-yellow-300 transition"
+                      style={{ color: '#088F8F' }}
                     >
                       Admin
                     </Link>
@@ -122,9 +123,9 @@ export default function Home() {
 
       <main>
         {/* Hero Section */}
-        <section className="bg-gradient-to-b from-orange-50 to-white py-20">
+        <section className="py-20" style={{ background: 'linear-gradient(to bottom, #E0F5F5, #ffffff)' }}>
           <div className="container mx-auto px-4 text-center">
-            <h2 className="text-5xl font-bold text-orange-800 mb-4 animate-fadeIn">
+            <h2 className="text-5xl font-bold mb-4 animate-fadeIn" style={{ color: '#8B4513' }}>
               Experience the Divine
             </h2>
             <p className="text-2xl text-gray-700 mb-8">
@@ -135,11 +136,12 @@ export default function Home() {
                 <input
                   type="text"
                   placeholder="Search for services..."
-                  className="flex-1 px-6 py-4 text-lg border-2 border-orange-300 rounded-l-lg focus:outline-none focus:border-orange-500"
+                  className="flex-1 px-6 py-4 text-lg border-2 rounded-l-lg focus:outline-none"
+                  style={{ borderColor: '#088F8F', '--tw-ring-color': '#088F8F' } as any}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
-                <button className="bg-orange-600 text-white px-8 py-4 rounded-r-lg font-semibold hover:bg-orange-700 transition">
+                <button className="text-white px-8 py-4 rounded-r-lg font-semibold transition" style={{ background: '#088F8F' }}>
                   Search
                 </button>
               </div>
@@ -151,28 +153,28 @@ export default function Home() {
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold text-orange-800 mb-4">Our Services</h2>
+              <h2 className="text-4xl font-bold mb-4" style={{ color: '#088F8F' }}>Our Services</h2>
               <div className="ornament"></div>
             </div>
             <div className="grid md:grid-cols-3 gap-8">
               <Link href="/homa" className="group">
-                <div className="bg-gradient-to-br from-orange-100 to-orange-50 p-8 rounded-xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2">
+                <div className="p-8 rounded-xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2" style={{ background: 'linear-gradient(to bottom right, #E0F5F5, #B8E5E5)' }}>
                   <div className="text-6xl mb-4 text-center">🔥</div>
-                  <h3 className="text-2xl font-bold text-orange-800 text-center mb-3">Homa Services</h3>
+                  <h3 className="text-2xl font-bold text-center mb-3" style={{ color: '#088F8F' }}>Homa Services</h3>
                   <p className="text-gray-600 text-center">Sacred fire rituals for prosperity and peace</p>
                 </div>
               </Link>
               <Link href="/puja" className="group">
                 <div className="bg-gradient-to-br from-yellow-100 to-yellow-50 p-8 rounded-xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2">
                   <div className="text-6xl mb-4 text-center">🙏</div>
-                  <h3 className="text-2xl font-bold text-orange-800 text-center mb-3">Puja Services</h3>
+                  <h3 className="text-2xl font-bold text-center mb-3" style={{ color: '#088F8F' }}>Puja Services</h3>
                   <p className="text-gray-600 text-center">Divine worship ceremonies for blessings</p>
                 </div>
               </Link>
               <Link href="/japa" className="group">
                 <div className="bg-gradient-to-br from-red-100 to-red-50 p-8 rounded-xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2">
                   <div className="text-6xl mb-4 text-center">📿</div>
-                  <h3 className="text-2xl font-bold text-orange-800 text-center mb-3">Japa Services</h3>
+                  <h3 className="text-2xl font-bold text-center mb-3" style={{ color: '#088F8F' }}>Japa Services</h3>
                   <p className="text-gray-600 text-center">Mantra recitation for spiritual growth</p>
                 </div>
               </Link>
@@ -181,7 +183,7 @@ export default function Home() {
         </section>
 
         {/* Stats Section */}
-        <section className="py-16 text-white" style={{background: '#FFA07A'}}>
+        <section className="py-16 text-white" style={{background: '#088F8F'}}>
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <h2 className="text-4xl font-bold mb-4">Why Us</h2>
@@ -209,15 +211,15 @@ export default function Home() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-16 bg-orange-50">
+        <section className="py-16" style={{ background: '#E0F5F5' }}>
           <div className="container mx-auto px-4 text-center">
-            <h2 className="text-4xl font-bold text-orange-800 mb-6">Ready to Begin Your Spiritual Journey?</h2>
+            <h2 className="text-4xl font-bold mb-6" style={{ color: '#088F8F' }}>Ready to Begin Your Spiritual Journey?</h2>
             <p className="text-xl text-gray-700 mb-8">Join thousands of devotees who have experienced divine blessings</p>
             <div className="flex justify-center space-x-4">
-              <Link href="/auth/signup" className="bg-orange-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-orange-700 transition">
+              <Link href="/auth/signup" className="text-white px-8 py-4 rounded-lg text-lg font-semibold transition" style={{ background: '#088F8F' }}>
                 Get Started
               </Link>
-              <Link href="/contact" className="bg-white text-orange-600 border-2 border-orange-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-orange-50 transition">
+              <Link href="/contact" className="bg-white px-8 py-4 rounded-lg text-lg font-semibold border-2 transition hover:bg-gray-50" style={{ color: '#088F8F', borderColor: '#088F8F' }}>
                 Contact Us
               </Link>
             </div>
