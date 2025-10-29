@@ -15,12 +15,16 @@ function CoverflowCarousel() {
   
   // Sacred images for Pooja, Homa, and Astrology
   const images = [
-    { src: '/images/sacred-1.jpg', alt: 'Sacred Pooja Ceremony', title: 'Divine Pooja' },
-    { src: '/images/sacred-2.jpg', alt: 'Holy Homa Ritual', title: 'Sacred Homa' },
-    { src: '/images/sacred-3.jpg', alt: 'Vedic Astrology', title: 'Vedic Astrology' },
-    { src: '/images/sacred-4.jpg', alt: 'Temple Worship', title: 'Temple Rituals' },
-    { src: '/images/sacred-5.jpg', alt: 'Sacred Fire Ceremony', title: 'Fire Ceremony' },
-    { src: '/images/sacred-6.jpg', alt: 'Spiritual Blessings', title: 'Divine Blessings' },
+    { src: '/images/13606540_1643131539348188_4941602659500979600_n.jpg', alt: 'Sacred Pooja Ceremony', title: 'Divine Pooja' },
+    { src: '/images/153700262_2889422301385766_9145664278903128347_n.jpg', alt: 'Holy Homa Ritual', title: 'Sacred Homa' },
+    { src: '/images/172025602_2921021328225863_4034529163949904811_n.jpg', alt: 'Vedic Astrology', title: 'Vedic Astrology' },
+    { src: '/images/183549571_2945214632473199_5260788716310171813_n.jpg', alt: 'Temple Worship', title: 'Temple Rituals' },
+    { src: '/images/35736027_2054892291505442_4237369800285749248_n.jpg', alt: 'Sacred Fire Ceremony', title: 'Fire Ceremony' },
+    { src: '/images/470128586_3925765744418078_401393879124089351_n.jpg', alt: 'Spiritual Blessings', title: 'Divine Blessings' },
+    { src: '/images/484175213_3999559870371998_8982690694709368337_n.jpg', alt: 'Sacred Rituals', title: 'Sacred Rituals' },
+    { src: '/images/484940184_4006514933009825_6626399863205392892_n.jpg', alt: 'Holy Ceremony', title: 'Holy Ceremony' },
+    { src: '/images/485032773_4006515239676461_9187027870231540033_n.jpg', alt: 'Divine Worship', title: 'Divine Worship' },
+    { src: '/images/489730459_4028884424106209_7325051519151063438_n.jpg', alt: 'Spiritual Services', title: 'Spiritual Services' },
   ]
 
   const totalSlides = images.length
@@ -134,7 +138,7 @@ function CoverflowCarousel() {
                   onClick={() => goToSlide(index)}
                 >
                   <div 
-                    className="w-full h-full rounded-2xl shadow-2xl overflow-hidden"
+                    className="w-full h-full rounded-2xl shadow-2xl overflow-hidden relative"
                     style={{
                       border: index === currentIndex ? '4px solid #F7C948' : '4px solid transparent',
                       boxShadow: index === currentIndex 
@@ -142,22 +146,17 @@ function CoverflowCarousel() {
                         : '0 10px 30px rgba(0, 0, 0, 0.3)',
                     }}
                   >
-                    {/* Placeholder gradient since images don't exist yet */}
-                    <div 
-                      className="w-full h-full flex items-center justify-center text-white text-4xl font-bold"
-                      style={{
-                        background: `linear-gradient(135deg, 
-                          ${index % 3 === 0 ? '#009688, #00796B' : 
-                            index % 3 === 1 ? '#F7C948, #F9A825' : 
-                            '#FF6F00, #E65100'})`,
-                      }}
-                    >
-                      <div className="text-center">
-                        <div className="text-7xl mb-4">
-                          {index % 3 === 0 ? '🙏' : index % 3 === 1 ? '🔥' : '⭐'}
-                        </div>
-                        <div className="text-2xl">{image.title}</div>
-                      </div>
+                    {/* Actual sacred images */}
+                    <Image
+                      src={image.src}
+                      alt={image.alt}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 90vw, 400px"
+                    />
+                    {/* Title overlay */}
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                      <p className="text-white text-xl font-semibold text-center">{image.title}</p>
                     </div>
                   </div>
                 </div>
