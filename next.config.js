@@ -4,7 +4,7 @@ const nextConfig = {
   // Enable Strict Mode only in production to avoid double-invocation flicker in dev
   reactStrictMode: isProd,
   images: {
-    domains: ['yavokvrcskbxhotpcejo.supabase.co'],
+    domains: ['yavokvrcskbxhotpcejo.supabase.co', 'images.unsplash.com'],
   },
 }
 

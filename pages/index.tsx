@@ -492,16 +492,16 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
               {[
-                { name: 'Astrology Consultation', slug: 'astrology-consultation', image: '/images/52810426_2261668384161164_188853169453793280_n.jpg' },
-                { name: 'Prashna Consultation', slug: 'prashna-consultation', image: '/images/496945781_4063981647263153_3524958164933709974_n.jpg' },
-                { name: 'Muhurtha Consultation', slug: 'muhurtha-consultation', image: '/images/493326495_4045383625789622_1113269834877900154_n.jpg' },
-                { name: 'Group Pooja/Homa Participation', slug: 'group-pooja-homa', image: '/images/35736027_2054892291505442_4237369800285749248_n.jpg' },
-                { name: 'Custom Pooja Ceremony', slug: 'custom-pooja-ceremony', image: '/images/183549571_2945214632473199_5260788716310171813_n.jpg' },
-                { name: 'Marriage Match Making', slug: 'marriage-match-making', image: '/images/497522818_4064193160575335_6146507872354531402_n.jpg' },
-                { name: 'Garbha Sanskar Astrology', slug: 'garbha-sanskar-astrology', image: '/images/470128586_3925765744418078_401393879124089351_n.jpg' },
-                { name: 'Prashna One-on-One Classes', slug: 'prashna-classes', image: '/images/484940184_4006514933009825_6626399863205392892_n.jpg' },
-                { name: 'Astrology One-on-One Classes', slug: 'astrology-classes', image: '/images/485032773_4006515239676461_9187027870231540033_n.jpg' },
-                { name: 'Astro/Prashna Group Class', slug: 'astro-prashna-group-class', image: '/images/484175213_3999559870371998_8982690694709368337_n.jpg' },
+                { name: 'Astrology Consultation', slug: 'astrology-consultation', image: 'https://images.unsplash.com/photo-1604608672516-f1b9b1a4a0e5?w=800&q=80' },
+                { name: 'Prashna Consultation', slug: 'prashna-consultation', image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=800&q=80' },
+                { name: 'Muhurtha Consultation', slug: 'muhurtha-consultation', image: 'https://images.unsplash.com/photo-1583846499903-59aa12d52c1f?w=800&q=80' },
+                { name: 'Group Pooja/Homa Participation', slug: 'group-pooja-homa', image: 'https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=800&q=80' },
+                { name: 'Custom Pooja Ceremony', slug: 'custom-pooja-ceremony', image: 'https://images.unsplash.com/photo-1609619385002-f40b59a44921?w=800&q=80' },
+                { name: 'Marriage Match Making', slug: 'marriage-match-making', image: 'https://images.unsplash.com/photo-1587271339550-3cd69af65f74?w=800&q=80' },
+                { name: 'Garbha Sanskar Astrology', slug: 'garbha-sanskar-astrology', image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=80' },
+                { name: 'Prashna One-on-One Classes', slug: 'prashna-classes', image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=800&q=80' },
+                { name: 'Astrology One-on-One Classes', slug: 'astrology-classes', image: 'https://images.unsplash.com/photo-1604608672516-f1b9b1a4a0e5?w=800&q=80' },
+                { name: 'Astro/Prashna Group Class', slug: 'astro-prashna-group-class', image: 'https://images.unsplash.com/photo-1583846499903-59aa12d52c1f?w=800&q=80' },
               ].map((service, index) => (
                 <Link
                   key={index}

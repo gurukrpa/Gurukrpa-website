@@ -19,70 +19,70 @@ const servicesData: Record<string, {
     title: 'Astrology Consultation',
     description: 'Personalized Vedic astrology readings and guidance',
     content: 'Detailed content will be added here...',
-    image: '/images/52810426_2261668384161164_188853169453793280_n.jpg',
+    image: 'https://images.unsplash.com/photo-1604608672516-f1b9b1a4a0e5?w=800&q=80',
     benefits: ['Personalized guidance', 'Life path clarity', 'Future predictions']
   },
   'prashna-consultation': {
     title: 'Prashna Consultation',
     description: 'Instant answers through Prashna astrology',
     content: 'Detailed content will be added here...',
-    image: '/images/496945781_4063981647263153_3524958164933709974_n.jpg',
+    image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=800&q=80',
     benefits: ['Instant answers', 'Specific questions', 'Accurate predictions']
   },
   'muhurtha-consultation': {
     title: 'Muhurtha Consultation',
     description: 'Auspicious timing for important life events',
     content: 'Detailed content will be added here...',
-    image: '/images/493326495_4045383625789622_1113269834877900154_n.jpg',
+    image: 'https://images.unsplash.com/photo-1583846499903-59aa12d52c1f?w=800&q=80',
     benefits: ['Perfect timing', 'Auspicious moments', 'Success assurance']
   },
   'group-pooja-homa': {
     title: 'Group Pooja/Homa Participation',
     description: 'Join collective spiritual ceremonies',
     content: 'Detailed content will be added here...',
-    image: '/images/35736027_2054892291505442_4237369800285749248_n.jpg',
+    image: 'https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=800&q=80',
     benefits: ['Community prayers', 'Shared blessings', 'Divine energy']
   },
   'custom-pooja-ceremony': {
     title: 'Custom Pooja Ceremony',
     description: 'Personalized sacred rituals for your needs',
     content: 'Detailed content will be added here...',
-    image: '/images/183549571_2945214632473199_5260788716310171813_n.jpg',
+    image: 'https://images.unsplash.com/photo-1609619385002-f40b59a44921?w=800&q=80',
     benefits: ['Tailored rituals', 'Personal intentions', 'Divine blessings']
   },
   'marriage-match-making': {
     title: 'Marriage Match Making',
     description: 'Vedic compatibility analysis for marriage',
     content: 'Detailed content will be added here...',
-    image: '/images/497522818_4064193160575335_6146507872354531402_n.jpg',
+    image: 'https://images.unsplash.com/photo-1587271339550-3cd69af65f74?w=800&q=80',
     benefits: ['Compatibility check', 'Perfect match', 'Happy marriage']
   },
   'garbha-sanskar-astrology': {
     title: 'Garbha Sanskar Astrology',
     description: 'Pre-natal spiritual guidance and rituals',
     content: 'Detailed content will be added here...',
-    image: '/images/470128586_3925765744418078_401393879124089351_n.jpg',
+    image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=80',
     benefits: ['Healthy pregnancy', 'Divine protection', 'Child welfare']
   },
   'prashna-classes': {
     title: 'Prashna One-on-One Classes',
     description: 'Learn Prashna astrology personally',
     content: 'Detailed content will be added here...',
-    image: '/images/484940184_4006514933009825_6626399863205392892_n.jpg',
+    image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=800&q=80',
     benefits: ['Expert teaching', 'Practical learning', 'Personal attention']
   },
   'astrology-classes': {
     title: 'Astrology One-on-One Classes',
     description: 'Master Vedic astrology with personal guidance',
     content: 'Detailed content will be added here...',
-    image: '/images/485032773_4006515239676461_9187027870231540033_n.jpg',
+    image: 'https://images.unsplash.com/photo-1604608672516-f1b9b1a4a0e5?w=800&q=80',
     benefits: ['Deep knowledge', 'Personalized pace', 'Expert mentorship']
   },
   'astro-prashna-group-class': {
     title: 'Astro/Prashna Group Class',
     description: 'Learn astrology in a group setting',
     content: 'Detailed content will be added here...',
-    image: '/images/484175213_3999559870371998_8982690694709368337_n.jpg',
+    image: 'https://images.unsplash.com/photo-1583846499903-59aa12d52c1f?w=800&q=80',
     benefits: ['Group learning', 'Interactive sessions', 'Affordable pricing']
   },
 }
