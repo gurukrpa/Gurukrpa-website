@@ -484,28 +484,28 @@ export default function Home() {
         <CoverflowCarousel />
 
         {/* Stats Section */}
-        <section className="py-12 text-white" style={{background: '#088F8F'}}>
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-8">
-              <h2 className="text-2xl font-bold mb-3">Why Us</h2>
+        <section className="py-8 text-white" style={{background: '#088F8F'}}>
+          <div className="container mx-auto px-4 max-w-4xl">
+            <div className="text-center mb-6">
+              <h2 className="text-xl font-bold mb-2">Why Us</h2>
               <div className="ornament"></div>
             </div>
-            <div className="grid md:grid-cols-4 gap-6 text-center">
+            <div className="grid md:grid-cols-4 gap-4 text-center">
               <div className="animate-fadeIn">
-                <div className="text-3xl font-bold mb-1">250,000+</div>
-                <div className="text-sm">Pujas Performed</div>
+                <div className="text-2xl font-bold mb-1">250,000+</div>
+                <div className="text-xs">Pujas Performed</div>
               </div>
               <div className="animate-fadeIn" style={{animationDelay: '0.1s'}}>
-                <div className="text-3xl font-bold mb-1">150,000+</div>
-                <div className="text-sm">Homas Performed</div>
+                <div className="text-2xl font-bold mb-1">150,000+</div>
+                <div className="text-xs">Homas Performed</div>
               </div>
               <div className="animate-fadeIn" style={{animationDelay: '0.2s'}}>
-                <div className="text-3xl font-bold mb-1">50,000,000+</div>
-                <div className="text-sm">Japa counts recited</div>
+                <div className="text-2xl font-bold mb-1">50,000,000+</div>
+                <div className="text-xs">Japa counts recited</div>
               </div>
               <div className="animate-fadeIn" style={{animationDelay: '0.3s'}}>
-                <div className="text-3xl font-bold mb-1">400,000+</div>
-                <div className="text-sm">Individuals enriched</div>
+                <div className="text-2xl font-bold mb-1">400,000+</div>
+                <div className="text-xs">Individuals enriched</div>
               </div>
             </div>
           </div>
