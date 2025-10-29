@@ -120,7 +120,7 @@ function CoverflowCarousel() {
         </div>
 
         {/* Coverflow Container */}
-        <div className="relative" style={{ height: '500px', perspective: '1200px' }}>
+        <div className="relative" style={{ height: '600px', perspective: '1200px' }}>
           <div className="absolute inset-0 flex items-center justify-center">
             {images.map((image, index) => {
               const style = getSlideStyle(index)
@@ -130,9 +130,9 @@ function CoverflowCarousel() {
                   className="absolute cursor-pointer"
                   style={{
                     ...style,
-                    width: '400px',
+                    width: '450px',
                     maxWidth: '90vw',
-                    height: '320px',
+                    height: '500px',
                     transformStyle: 'preserve-3d',
                   }}
                   onClick={() => goToSlide(index)}
@@ -151,8 +151,8 @@ function CoverflowCarousel() {
                       src={image.src}
                       alt={image.alt}
                       fill
-                      className="object-contain"
-                      sizes="(max-width: 768px) 90vw, 400px"
+                      className="object-cover"
+                      sizes="(max-width: 768px) 90vw, 450px"
                     />
                     {/* Title overlay */}
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
