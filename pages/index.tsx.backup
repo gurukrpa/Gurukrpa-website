@@ -9,7 +9,7 @@ import { useState, useEffect, useRef } from 'react'
 import { FaWhatsapp, FaPhone, FaEnvelope } from 'react-icons/fa'
 import { supabase } from '@/lib/supabase'
 
-// Interactive Stories Carousel Component  
+// Interactive Stories Carousel Component
 function StoriesCarousel() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
@@ -29,6 +29,7 @@ function StoriesCarousel() {
     { icon: '🎵', title: 'Sacred Music', description: 'Devotional songs and mantras', gradient: 'from-cyan-200 to-teal-200' },
   ]
 
+  // Auto-advance slides
   useEffect(() => {
     if (!isPaused) {
       const timer = setInterval(() => {
@@ -38,6 +39,7 @@ function StoriesCarousel() {
     }
   }, [isPaused])
 
+  // Keyboard navigation
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft') goToPrevious()
@@ -59,6 +61,7 @@ function StoriesCarousel() {
     setCurrentSlide(index)
   }
 
+  // Handle tap/click navigation (left/right side)
   const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = containerRef.current?.getBoundingClientRect()
     if (!rect) return
@@ -81,6 +84,7 @@ function StoriesCarousel() {
           <div className="ornament"></div>
         </div>
 
+        {/* Carousel Container */}
         <div
           ref={containerRef}
           className="relative overflow-hidden rounded-2xl shadow-2xl cursor-pointer"
@@ -89,6 +93,7 @@ function StoriesCarousel() {
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
+          {/* Slides */}
           <div
             className="flex transition-transform duration-700 ease-out"
             style={{ transform: `translateX(-${currentSlide * 100}%)` }}
@@ -96,7 +101,9 @@ function StoriesCarousel() {
             {slides.map((slide, index) => (
               <div key={index} className="min-w-full flex items-center justify-center p-12">
                 <div className="text-center max-w-2xl">
-                  <div className={`w-full h-96 bg-gradient-to-br ${slide.gradient} rounded-xl flex items-center justify-center mb-6 shadow-lg transform transition hover:scale-105`}>
+                  <div
+                    className={`w-full h-96 bg-gradient-to-br ${slide.gradient} rounded-xl flex items-center justify-center mb-6 shadow-lg transform transition hover:scale-105`}
+                  >
                     <div className="text-8xl animate-pulse">{slide.icon}</div>
                   </div>
                   <h3 className="text-3xl font-bold mb-3" style={{ color: '#088F8F' }}>
@@ -111,9 +118,13 @@ function StoriesCarousel() {
             ))}
           </div>
 
+          {/* Progress Bars */}
           <div className="absolute top-4 left-0 right-0 flex justify-center space-x-2 px-4">
             {slides.map((_, i) => (
-              <div key={i} className="h-1 flex-1 max-w-20 bg-white/30 rounded-full overflow-hidden">
+              <div
+                key={i}
+                className="h-1 flex-1 max-w-20 bg-white/30 rounded-full overflow-hidden"
+              >
                 <div
                   className="h-full transition-all duration-300"
                   style={{
@@ -125,6 +136,7 @@ function StoriesCarousel() {
             ))}
           </div>
 
+          {/* Navigation Dots */}
           <div className="absolute bottom-6 left-0 right-0 flex justify-center space-x-3">
             {slides.map((_, i) => (
               <button
@@ -134,12 +146,15 @@ function StoriesCarousel() {
                   goToSlide(i)
                 }}
                 className="w-3 h-3 rounded-full transition-all transform hover:scale-150"
-                style={{ background: i === currentSlide ? '#088F8F' : '#B8E5E5' }}
+                style={{
+                  background: i === currentSlide ? '#088F8F' : '#B8E5E5',
+                }}
                 aria-label={`Go to slide ${i + 1}`}
               />
             ))}
           </div>
 
+          {/* Previous/Next Arrows */}
           <button
             onClick={(e) => {
               e.stopPropagation()
@@ -163,12 +178,14 @@ function StoriesCarousel() {
             ›
           </button>
 
+          {/* Tap Hint (Mobile) */}
           <div className="absolute bottom-20 left-0 right-0 flex justify-between px-8 pointer-events-none">
             <div className="text-white/50 text-sm">← Tap</div>
             <div className="text-white/50 text-sm">Tap →</div>
           </div>
         </div>
 
+        {/* Instructions */}
         <div className="mt-6 text-center text-gray-500 text-sm">
           <p>Use arrow keys (←/→) or click left/right to navigate • Auto-advances every 4 seconds</p>
         </div>
@@ -313,6 +330,154 @@ export default function Home() {
                   Search
                 </button>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Interactive Stories Carousel */}
+        <StoriesCarousel />
+
+        {/* Stats Section */}
+        <section className="py-16 text-white" style={{background: '#088F8F'}}>
+              <div className="flex transition-transform duration-500 ease-in-out">
+                {/* Slide 1 */}
+                <div className="min-w-full flex items-center justify-center p-12">
+                  <div className="text-center">
+                    <div className="w-full h-96 bg-gradient-to-br from-teal-100 to-cyan-200 rounded-xl flex items-center justify-center mb-6 shadow-lg">
+                      <div className="text-6xl">🕉️</div>
+                    </div>
+                    <h3 className="text-2xl font-bold mb-2" style={{ color: '#088F8F' }}>Sacred Rituals</h3>
+                    <p className="text-gray-600">Traditional Vedic ceremonies for spiritual growth</p>
+                  </div>
+                </div>
+                
+                {/* Slide 2 */}
+                <div className="min-w-full flex items-center justify-center p-12">
+                  <div className="text-center">
+                    <div className="w-full h-96 bg-gradient-to-br from-cyan-100 to-teal-200 rounded-xl flex items-center justify-center mb-6 shadow-lg">
+                      <div className="text-6xl">🔥</div>
+                    </div>
+                    <h3 className="text-2xl font-bold mb-2" style={{ color: '#088F8F' }}>Homa Ceremonies</h3>
+                    <p className="text-gray-600">Sacred fire rituals for prosperity and peace</p>
+                  </div>
+                </div>
+
+                {/* Slide 3 */}
+                <div className="min-w-full flex items-center justify-center p-12">
+                  <div className="text-center">
+                    <div className="w-full h-96 bg-gradient-to-br from-teal-200 to-cyan-100 rounded-xl flex items-center justify-center mb-6 shadow-lg">
+                      <div className="text-6xl">�</div>
+                    </div>
+                    <h3 className="text-2xl font-bold mb-2" style={{ color: '#088F8F' }}>Puja Services</h3>
+                    <p className="text-gray-600">Divine worship ceremonies for blessings</p>
+                  </div>
+                </div>
+
+                {/* Slide 4 */}
+                <div className="min-w-full flex items-center justify-center p-12">
+                  <div className="text-center">
+                    <div className="w-full h-96 bg-gradient-to-br from-cyan-200 to-teal-100 rounded-xl flex items-center justify-center mb-6 shadow-lg">
+                      <div className="text-6xl">📿</div>
+                    </div>
+                    <h3 className="text-2xl font-bold mb-2" style={{ color: '#088F8F' }}>Japa Meditation</h3>
+                    <p className="text-gray-600">Mantra recitation for inner peace</p>
+                  </div>
+                </div>
+
+                {/* Slide 5 */}
+                <div className="min-w-full flex items-center justify-center p-12">
+                  <div className="text-center">
+                    <div className="w-full h-96 bg-gradient-to-br from-teal-100 to-cyan-300 rounded-xl flex items-center justify-center mb-6 shadow-lg">
+                      <div className="text-6xl">🪷</div>
+                    </div>
+                    <h3 className="text-2xl font-bold mb-2" style={{ color: '#088F8F' }}>Spiritual Guidance</h3>
+                    <p className="text-gray-600">Expert consultations for life's journey</p>
+                  </div>
+                </div>
+
+                {/* Slide 6 */}
+                <div className="min-w-full flex items-center justify-center p-12">
+                  <div className="text-center">
+                    <div className="w-full h-96 bg-gradient-to-br from-cyan-300 to-teal-200 rounded-xl flex items-center justify-center mb-6 shadow-lg">
+                      <div className="text-6xl">🌟</div>
+                    </div>
+                    <h3 className="text-2xl font-bold mb-2" style={{ color: '#088F8F' }}>Astrology Services</h3>
+                    <p className="text-gray-600">Vedic astrology readings and guidance</p>
+                  </div>
+                </div>
+
+                {/* Slide 7 */}
+                <div className="min-w-full flex items-center justify-center p-12">
+                  <div className="text-center">
+                    <div className="w-full h-96 bg-gradient-to-br from-teal-200 to-cyan-200 rounded-xl flex items-center justify-center mb-6 shadow-lg">
+                      <div className="text-6xl">🎭</div>
+                    </div>
+                    <h3 className="text-2xl font-bold mb-2" style={{ color: '#088F8F' }}>Cultural Events</h3>
+                    <p className="text-gray-600">Traditional celebrations and festivals</p>
+                  </div>
+                </div>
+
+                {/* Slide 8 */}
+                <div className="min-w-full flex items-center justify-center p-12">
+                  <div className="text-center">
+                    <div className="w-full h-96 bg-gradient-to-br from-cyan-100 to-teal-300 rounded-xl flex items-center justify-center mb-6 shadow-lg">
+                      <div className="text-6xl">📖</div>
+                    </div>
+                    <h3 className="text-2xl font-bold mb-2" style={{ color: '#088F8F' }}>Vedic Learning</h3>
+                    <p className="text-gray-600">Ancient wisdom for modern times</p>
+                  </div>
+                </div>
+
+                {/* Slide 9 */}
+                <div className="min-w-full flex items-center justify-center p-12">
+                  <div className="text-center">
+                    <div className="w-full h-96 bg-gradient-to-br from-teal-300 to-cyan-100 rounded-xl flex items-center justify-center mb-6 shadow-lg">
+                      <div className="text-6xl">🧘</div>
+                    </div>
+                    <h3 className="text-2xl font-bold mb-2" style={{ color: '#088F8F' }}>Meditation Classes</h3>
+                    <p className="text-gray-600">Find inner peace and balance</p>
+                  </div>
+                </div>
+
+                {/* Slide 10 */}
+                <div className="min-w-full flex items-center justify-center p-12">
+                  <div className="text-center">
+                    <div className="w-full h-96 bg-gradient-to-br from-cyan-200 to-teal-200 rounded-xl flex items-center justify-center mb-6 shadow-lg">
+                      <div className="text-6xl">🎵</div>
+                    </div>
+                    <h3 className="text-2xl font-bold mb-2" style={{ color: '#088F8F' }}>Sacred Music</h3>
+                    <p className="text-gray-600">Devotional songs and mantras</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Navigation Dots */}
+              <div className="absolute bottom-6 left-0 right-0 flex justify-center space-x-3">
+                {[...Array(10)].map((_, i) => (
+                  <button
+                    key={i}
+                    className="w-3 h-3 rounded-full transition-all"
+                    style={{ background: i === 0 ? '#088F8F' : '#B8E5E5' }}
+                    aria-label={`Go to slide ${i + 1}`}
+                  />
+                ))}
+              </div>
+
+              {/* Previous/Next Arrows */}
+              <button
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center transition hover:scale-110"
+                style={{ color: '#088F8F' }}
+                aria-label="Previous slide"
+              >
+                ‹
+              </button>
+              <button
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center transition hover:scale-110"
+                style={{ color: '#088F8F' }}
+                aria-label="Next slide"
+              >
+                ›
+              </button>
             </div>
           </div>
         </section>
