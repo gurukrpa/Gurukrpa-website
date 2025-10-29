@@ -385,7 +385,6 @@ function StoriesCarousel() {
 }
 
 export default function Home() {
-  const [searchQuery, setSearchQuery] = useState('')
   const [user, setUser] = useState<{ full_name?: string; email?: string } | null>(null)
   const [loading, setLoading] = useState(true)
 
@@ -497,33 +496,6 @@ export default function Home() {
       </header>
 
       <main>
-        {/* Hero Section */}
-        <section className="py-20" style={{ background: 'linear-gradient(to bottom, #E0F5F5, #ffffff)' }}>
-          <div className="container mx-auto px-4 text-center">
-            <h2 className="text-5xl font-bold mb-4 animate-fadeIn" style={{ color: '#8B4513' }}>
-              Experience the Divine
-            </h2>
-            <p className="text-2xl text-gray-700 mb-8">
-              Explore Authentic Online Homa & Puja Services
-            </p>
-            <div className="max-w-2xl mx-auto">
-              <div className="flex">
-                <input
-                  type="text"
-                  placeholder="Search for services..."
-                  className="flex-1 px-6 py-4 text-lg border-2 rounded-l-lg focus:outline-none"
-                  style={{ borderColor: '#088F8F', '--tw-ring-color': '#088F8F' } as any}
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-                <button className="text-white px-8 py-4 rounded-r-lg font-semibold transition" style={{ background: '#088F8F' }}>
-                  Search
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* 3D Coverflow Sacred Images Gallery */}
         <CoverflowCarousel />
 
