@@ -199,11 +199,6 @@ function CoverflowCarousel() {
             />
           ))}
         </div>
-
-        {/* Instructions */}
-        <div className="mt-8 text-center text-gray-500 text-sm">
-          <p>Click on images to view • Auto-rotates every 4 seconds • Hover to pause</p>
-        </div>
       </div>
     </section>
   )
