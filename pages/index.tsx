@@ -151,7 +151,7 @@ function CoverflowCarousel() {
                       src={image.src}
                       alt={image.alt}
                       fill
-                      className="object-cover"
+                      className="object-contain"
                       sizes="(max-width: 768px) 90vw, 400px"
                     />
                     {/* Title overlay */}
