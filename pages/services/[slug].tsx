@@ -19,49 +19,49 @@ const servicesData: Record<string, {
     title: 'Astrology Consultation',
     description: 'Personalized Vedic astrology readings and guidance',
     content: 'Detailed content will be added here...',
-    image: '/images/13606540_1643131539348188_4941602659500979600_n.jpg',
+    image: '/images/52810426_2261668384161164_188853169453793280_n.jpg',
     benefits: ['Personalized guidance', 'Life path clarity', 'Future predictions']
   },
   'prashna-consultation': {
     title: 'Prashna Consultation',
     description: 'Instant answers through Prashna astrology',
     content: 'Detailed content will be added here...',
-    image: '/images/153700262_2889422301385766_9145664278903128347_n.jpg',
+    image: '/images/496945781_4063981647263153_3524958164933709974_n.jpg',
     benefits: ['Instant answers', 'Specific questions', 'Accurate predictions']
   },
   'muhurtha-consultation': {
     title: 'Muhurtha Consultation',
     description: 'Auspicious timing for important life events',
     content: 'Detailed content will be added here...',
-    image: '/images/172025602_2921021328225863_4034529163949904811_n.jpg',
+    image: '/images/493326495_4045383625789622_1113269834877900154_n.jpg',
     benefits: ['Perfect timing', 'Auspicious moments', 'Success assurance']
   },
   'group-pooja-homa': {
     title: 'Group Pooja/Homa Participation',
     description: 'Join collective spiritual ceremonies',
     content: 'Detailed content will be added here...',
-    image: '/images/183549571_2945214632473199_5260788716310171813_n.jpg',
+    image: '/images/35736027_2054892291505442_4237369800285749248_n.jpg',
     benefits: ['Community prayers', 'Shared blessings', 'Divine energy']
   },
   'custom-pooja-ceremony': {
     title: 'Custom Pooja Ceremony',
     description: 'Personalized sacred rituals for your needs',
     content: 'Detailed content will be added here...',
-    image: '/images/35736027_2054892291505442_4237369800285749248_n.jpg',
+    image: '/images/183549571_2945214632473199_5260788716310171813_n.jpg',
     benefits: ['Tailored rituals', 'Personal intentions', 'Divine blessings']
   },
   'marriage-match-making': {
     title: 'Marriage Match Making',
     description: 'Vedic compatibility analysis for marriage',
     content: 'Detailed content will be added here...',
-    image: '/images/470128586_3925765744418078_401393879124089351_n.jpg',
+    image: '/images/497522818_4064193160575335_6146507872354531402_n.jpg',
     benefits: ['Compatibility check', 'Perfect match', 'Happy marriage']
   },
   'garbha-sanskar-astrology': {
     title: 'Garbha Sanskar Astrology',
     description: 'Pre-natal spiritual guidance and rituals',
     content: 'Detailed content will be added here...',
-    image: '/images/484175213_3999559870371998_8982690694709368337_n.jpg',
+    image: '/images/470128586_3925765744418078_401393879124089351_n.jpg',
     benefits: ['Healthy pregnancy', 'Divine protection', 'Child welfare']
   },
   'prashna-classes': {
@@ -82,7 +82,7 @@ const servicesData: Record<string, {
     title: 'Astro/Prashna Group Class',
     description: 'Learn astrology in a group setting',
     content: 'Detailed content will be added here...',
-    image: '/images/489730459_4028884424106209_7325051519151063438_n.jpg',
+    image: '/images/484175213_3999559870371998_8982690694709368337_n.jpg',
     benefits: ['Group learning', 'Interactive sessions', 'Affordable pricing']
   },
 }
