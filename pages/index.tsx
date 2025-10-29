@@ -484,28 +484,27 @@ export default function Home() {
         <CoverflowCarousel />
 
         {/* Stats Section */}
-        <section className="py-8 text-white" style={{background: '#088F8F'}}>
-          <div className="container mx-auto px-4 max-w-4xl">
-            <div className="text-center mb-6">
+        <section className="py-6 text-white" style={{background: '#088F8F'}}>
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-4">
               <h2 className="text-xl font-bold mb-2">Why Us</h2>
-              <div className="ornament"></div>
             </div>
-            <div className="grid md:grid-cols-4 gap-4 text-center">
-              <div className="animate-fadeIn">
-                <div className="text-2xl font-bold mb-1">250,000+</div>
-                <div className="text-xs">Pujas Performed</div>
+            <div className="flex flex-wrap justify-center items-center gap-6 text-center">
+              <div className="animate-fadeIn flex items-center gap-2">
+                <span className="text-2xl font-bold">250,000+</span>
+                <span className="text-xs">Pujas Performed</span>
               </div>
-              <div className="animate-fadeIn" style={{animationDelay: '0.1s'}}>
-                <div className="text-2xl font-bold mb-1">150,000+</div>
-                <div className="text-xs">Homas Performed</div>
+              <div className="animate-fadeIn flex items-center gap-2" style={{animationDelay: '0.1s'}}>
+                <span className="text-2xl font-bold">150,000+</span>
+                <span className="text-xs">Homas Performed</span>
               </div>
-              <div className="animate-fadeIn" style={{animationDelay: '0.2s'}}>
-                <div className="text-2xl font-bold mb-1">50,000,000+</div>
-                <div className="text-xs">Japa counts recited</div>
+              <div className="animate-fadeIn flex items-center gap-2" style={{animationDelay: '0.2s'}}>
+                <span className="text-2xl font-bold">50,000,000+</span>
+                <span className="text-xs">Japa counts recited</span>
               </div>
-              <div className="animate-fadeIn" style={{animationDelay: '0.3s'}}>
-                <div className="text-2xl font-bold mb-1">400,000+</div>
-                <div className="text-xs">Individuals enriched</div>
+              <div className="animate-fadeIn flex items-center gap-2" style={{animationDelay: '0.3s'}}>
+                <span className="text-2xl font-bold">400,000+</span>
+                <span className="text-xs">Individuals enriched</span>
               </div>
             </div>
           </div>
