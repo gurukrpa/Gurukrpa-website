@@ -73,11 +73,11 @@ export default function Login() {
         <title>Login - Gurukrpa</title>
       </Head>
 
-      <div className="min-h-screen bg-gradient-to-br from-orange-100 via-yellow-50 to-orange-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8" style={{ background: 'linear-gradient(135deg, #E0F5F5 0%, #B8E5E5 50%, #E0F5F5 100%)' }}>
         <div className="max-w-md w-full">
           <div className="bg-white rounded-2xl shadow-2xl p-8">
             <div className="text-center mb-8">
-              <div className="mx-auto mb-3 h-16 w-16 md:h-20 md:w-20 relative rounded-full overflow-hidden ring-2 ring-orange-200">
+              <div className="mx-auto mb-3 h-16 w-16 md:h-20 md:w-20 relative rounded-full overflow-hidden ring-2" style={{ borderColor: '#088F8F' }}>
                 <Image src="/images/gurukrpa-logo.jpg" alt="Gurukrpa Logo" fill sizes="80px" className="object-cover" style={{ transform: 'scale(1.07)' }} priority />
               </div>
               <Wordmark className="text-4xl md:text-5xl mb-2" />
@@ -107,7 +107,8 @@ export default function Login() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent"
+                  style={{ '--tw-ring-color': '#088F8F' } as any}
                   placeholder="Enter your email"
                 />
               </div>
@@ -122,7 +123,8 @@ export default function Login() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent"
+                  style={{ '--tw-ring-color': '#088F8F' } as any}
                   placeholder="Enter your password"
                 />
               </div>
@@ -132,7 +134,8 @@ export default function Login() {
                   <input
                     id="remember-me"
                     type="checkbox"
-                    className="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded"
+                    className="h-4 w-4 border-gray-300 rounded"
+                    style={{ accentColor: '#088F8F' }}
                   />
                   <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
                     Remember me
@@ -140,14 +143,14 @@ export default function Login() {
                 </div>
 
                 <div className="text-sm">
-                  <Link href="/auth/forgot-password" className="text-orange-600 hover:text-orange-700">
+                  <Link href="/auth/forgot-password" className="hover:underline" style={{ color: '#088F8F' }}>
                     Forgot password?
                   </Link>
                 </div>
               </div>
 
               <div className="mt-2 text-sm">
-                <button type="button" onClick={handleResend} className="text-orange-600 hover:text-orange-700">
+                <button type="button" onClick={handleResend} className="hover:underline" style={{ color: '#088F8F' }}>
                   Resend verification email
                 </button>
               </div>
@@ -155,7 +158,8 @@ export default function Login() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-orange-600 to-orange-500 text-white py-3 px-4 rounded-lg font-semibold hover:from-orange-700 hover:to-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition"
+                className="w-full text-white py-3 px-4 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition"
+                style={{ background: 'linear-gradient(to right, #088F8F, #077070)', '--tw-ring-color': '#088F8F' } as any}
               >
                 {loading ? 'Logging in...' : 'Login'}
               </button>
@@ -164,7 +168,7 @@ export default function Login() {
             <div className="mt-6 text-center">
               <p className="text-gray-600">
                 Don't have an account?{' '}
-                <Link href="/auth/signup" className="text-orange-600 font-semibold hover:text-orange-700">
+                <Link href="/auth/signup" className="font-semibold hover:underline" style={{ color: '#088F8F' }}>
                   Sign up here
                 </Link>
               </p>

@@ -157,7 +157,7 @@ export default function AdminDashboard() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-2xl text-orange-600">Loading...</div>
+        <div className="text-2xl" style={{ color: '#088F8F' }}>Loading...</div>
       </div>
     )
   }
@@ -170,13 +170,14 @@ export default function AdminDashboard() {
 
       <div className="min-h-screen bg-gray-100">
         {/* Header */}
-        <header className="bg-gradient-to-r from-orange-600 to-orange-500 text-white shadow-lg">
+        <header className="text-white shadow-lg" style={{ background: 'linear-gradient(to right, #088F8F, #077070)' }}>
           <div className="container mx-auto px-4 py-4">
             <div className="flex justify-between items-center">
               <h1 className="text-2xl font-bold">🕉️ Gurukrpa Admin Dashboard</h1>
               <button
                 onClick={handleLogout}
-                className="bg-white text-orange-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100"
+                className="bg-white px-4 py-2 rounded-lg font-semibold hover:bg-gray-100"
+                style={{ color: '#088F8F' }}
               >
                 Logout
               </button>
@@ -192,9 +193,9 @@ export default function AdminDashboard() {
               {allServices.map((service) => {
                 const count = serviceStats[service] || 0
                 return (
-                  <div key={service} className="flex items-center justify-between p-3 bg-orange-50 rounded-lg hover:bg-orange-100 transition">
+                  <div key={service} className="flex items-center justify-between p-3 rounded-lg transition" style={{ backgroundColor: count > 0 ? '#E0F5F5' : '#f9f9f9' }}>
                     <span className="text-sm font-medium text-gray-700 flex-1">{service}</span>
-                    <span className={`px-3 py-1 rounded-full text-sm font-bold ml-2 ${count > 0 ? 'bg-orange-600 text-white' : 'bg-gray-300 text-gray-600'}`}>
+                    <span className={`px-3 py-1 rounded-full text-sm font-bold ml-2 ${count > 0 ? 'text-white' : 'bg-gray-300 text-gray-600'}`} style={count > 0 ? { backgroundColor: '#088F8F' } : {}}>
                       {count}
                     </span>
                   </div>
@@ -203,7 +204,7 @@ export default function AdminDashboard() {
             </div>
             <div className="mt-6 pt-6 border-t">
               <div className="text-center">
-                <p className="text-2xl font-bold text-orange-600">{Object.values(serviceStats).reduce((a, b) => a + b, 0)}</p>
+                <p className="text-2xl font-bold" style={{ color: '#088F8F' }}>{Object.values(serviceStats).reduce((a, b) => a + b, 0)}</p>
                 <p className="text-sm text-gray-600">Total Service Selections</p>
               </div>
             </div>
@@ -213,18 +214,18 @@ export default function AdminDashboard() {
           <div className="flex-1">
             <div className="container mx-auto px-4 py-8">
           {/* Stats Cards */}
-          <div className="grid md:grid-cols-3 gap-6 mb-8">
-            <div className="bg-white p-6 rounded-xl shadow-lg">
-              <h3 className="text-gray-600 text-sm font-semibold mb-2">Total Users</h3>
-              <p className="text-4xl font-bold text-orange-600">{users.length}</p>
+          <div className="grid md:grid-cols-3 gap-4 mb-6">
+            <div className="p-4 rounded-lg border" style={{ backgroundColor: '#E0F5F5', borderColor: '#088F8F' }}>
+              <h3 className="text-gray-700 text-xs font-medium mb-1">Total Users</h3>
+              <p className="text-3xl font-bold" style={{ color: '#088F8F' }}>{users.length}</p>
             </div>
-            <div className="bg-white p-6 rounded-xl shadow-lg">
-              <h3 className="text-gray-600 text-sm font-semibold mb-2">Total Bookings</h3>
-              <p className="text-4xl font-bold text-green-600">{bookings.length}</p>
+            <div className="p-4 rounded-lg border border-green-300" style={{ backgroundColor: '#E0F5F5' }}>
+              <h3 className="text-gray-700 text-xs font-medium mb-1">Total Bookings</h3>
+              <p className="text-3xl font-bold text-green-600">{bookings.length}</p>
             </div>
-            <div className="bg-white p-6 rounded-xl shadow-lg">
-              <h3 className="text-gray-600 text-sm font-semibold mb-2">Total Revenue</h3>
-              <p className="text-4xl font-bold text-blue-600">
+            <div className="p-4 rounded-lg border border-blue-300" style={{ backgroundColor: '#E0F5F5' }}>
+              <h3 className="text-gray-700 text-xs font-medium mb-1">Total Revenue</h3>
+              <p className="text-3xl font-bold text-blue-600">
                 ₹{bookings.reduce((sum, b) => sum + Number(b.amount), 0).toLocaleString('en-IN')}
               </p>
             </div>
@@ -235,7 +236,8 @@ export default function AdminDashboard() {
             <input
               type="text"
               placeholder="Search users or bookings..."
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2"
+              style={{ '--tw-ring-color': '#088F8F' } as any}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -247,9 +249,10 @@ export default function AdminDashboard() {
               <button
                 className={`flex-1 px-6 py-4 font-semibold ${
                   activeTab === 'users'
-                    ? 'bg-orange-600 text-white'
+                    ? 'text-white'
                     : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
                 }`}
+                style={activeTab === 'users' ? { backgroundColor: '#088F8F' } : {}}
                 onClick={() => setActiveTab('users')}
               >
                 Users ({filteredUsers.length})
@@ -257,9 +260,10 @@ export default function AdminDashboard() {
               <button
                 className={`flex-1 px-6 py-4 font-semibold ${
                   activeTab === 'bookings'
-                    ? 'bg-orange-600 text-white'
+                    ? 'text-white'
                     : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
                 }`}
+                style={activeTab === 'bookings' ? { backgroundColor: '#088F8F' } : {}}
                 onClick={() => setActiveTab('bookings')}
               >
                 Bookings ({filteredBookings.length})
@@ -300,7 +304,7 @@ export default function AdminDashboard() {
                             {user.selected_services && user.selected_services.length > 0 ? (
                               <div className="flex flex-wrap gap-1">
                                 {user.selected_services.map((service, idx) => (
-                                  <span key={idx} className="inline-block px-2 py-1 text-xs bg-orange-100 text-orange-700 rounded">
+                                  <span key={idx} className="inline-block px-2 py-1 text-xs rounded" style={{ backgroundColor: '#E0F5F5', color: '#066666' }}>
                                     {service}
                                   </span>
                                 ))}
@@ -342,7 +346,7 @@ export default function AdminDashboard() {
                           </td>
                           <td className="py-3 px-4">{booking.service_name}</td>
                           <td className="py-3 px-4">
-                            <span className="px-2 py-1 bg-orange-100 text-orange-700 rounded-full text-sm">
+                            <span className="px-2 py-1 rounded-full text-sm" style={{ backgroundColor: '#E0F5F5', color: '#066666' }}>
                               {booking.service_type}
                             </span>
                           </td>

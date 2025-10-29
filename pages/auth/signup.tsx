@@ -138,11 +138,11 @@ export default function SignUp() {
         <title>Sign Up - Gurukrpa</title>
       </Head>
 
-      <div className="min-h-screen bg-gradient-to-br from-orange-100 via-yellow-50 to-orange-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-gradient-to-br  flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl w-full">
           <div className="bg-white rounded-2xl shadow-2xl p-8">
             <div className="text-center mb-8">
-              <div className="mx-auto mb-3 h-16 w-16 md:h-20 md:w-20 relative rounded-full overflow-hidden ring-2 ring-orange-200">
+              <div className="mx-auto mb-3 h-16 w-16 md:h-20 md:w-20 relative rounded-full overflow-hidden ring-2 ">
                 <Image src="/images/gurukrpa-logo.jpg" alt="Gurukrpa Logo" fill sizes="80px" className="object-cover" style={{ transform: 'scale(1.07)' }} priority />
               </div>
               <Wordmark className="text-4xl md:text-5xl mb-2" />
@@ -153,7 +153,7 @@ export default function SignUp() {
                   <button
                     type="button"
                     onClick={() => setServicesOpen(o => !o)}
-                    className={`w-full flex items-center justify-between rounded-lg border px-4 py-3 text-left bg-white ${selectedServices.length === 0 ? 'border-gray-300' : 'border-orange-400'}`}
+                    className={`w-full flex items-center justify-between rounded-lg border px-4 py-3 text-left bg-white ${selectedServices.length === 0 ? 'border-gray-300' : ''}`}
                   >
                     <span className="text-gray-700 truncate">
                       {selectedServices.length === 0 ? 'Choose one or more services' : `${selectedServices.length} selected`}
@@ -164,29 +164,29 @@ export default function SignUp() {
                   </button>
 
                   {servicesOpen && (
-                    <div className="absolute z-20 mt-2 w-full rounded-lg border border-orange-200 bg-white shadow-lg">
-                      <div className="p-2 border-b bg-orange-50 border-orange-100">
+                    <div className="absolute z-20 mt-2 w-full rounded-lg border  bg-white shadow-lg">
+                      <div className="p-2 border-b  ">
                         <input
                           type="text"
                           value={serviceQuery}
                           onChange={(e) => setServiceQuery(e.target.value)}
                           placeholder="Search services..."
-                          className="w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-1 focus:ring-orange-500"
+                          className="w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-1 "
                         />
                       </div>
                       <div className="max-h-64 overflow-auto p-2 space-y-1">
                         {services
                           .filter(s => s.name.toLowerCase().includes(serviceQuery.trim().toLowerCase()))
                           .map(({ name, Icon }) => (
-                            <label key={name} className="flex items-center gap-3 p-2 rounded-md hover:bg-orange-50 cursor-pointer">
+                            <label key={name} className="flex items-center gap-3 p-2 rounded-md hover: cursor-pointer">
                               <input
                                 type="checkbox"
-                                className="h-4 w-4 text-orange-600"
+                                className="h-4 w-4 "
                                 checked={selectedServices.includes(name)}
                                 onChange={() => toggleService(name)}
                               />
                               <span className="flex items-center gap-2 text-sm text-gray-800">
-                                <span className="inline-flex items-center justify-center h-6 w-6 rounded-full bg-orange-300"><Icon size={12} className="text-white" /></span>
+                                <span className="inline-flex items-center justify-center h-6 w-6 rounded-full "><Icon size={12} className="text-white" /></span>
                                 {name}
                               </span>
                             </label>
@@ -198,8 +198,8 @@ export default function SignUp() {
                       <div className="flex items-center justify-between p-2 border-t bg-gray-50">
                         <button type="button" className="text-xs text-gray-600 hover:text-gray-800" onClick={clearServices}>Clear</button>
                         <div className="space-x-2">
-                          <button type="button" className="text-xs text-orange-700 hover:underline" onClick={selectAllServices}>Select all</button>
-                          <button type="button" className="text-xs bg-orange-600 text-white px-3 py-1 rounded" onClick={() => setServicesOpen(false)}>Done</button>
+                          <button type="button" className="text-xs  hover:underline" onClick={selectAllServices}>Select all</button>
+                          <button type="button" className="text-xs  text-white px-3 py-1 rounded" onClick={() => setServicesOpen(false)}>Done</button>
                         </div>
                       </div>
                     </div>
@@ -246,7 +246,7 @@ export default function SignUp() {
                   required
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2  focus:border-transparent"
                   placeholder="Enter your full name"
                 />
               </div>
@@ -261,7 +261,7 @@ export default function SignUp() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2  focus:border-transparent"
                   placeholder="Enter your email"
                 />
               </div>
@@ -276,7 +276,7 @@ export default function SignUp() {
                   required
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2  focus:border-transparent"
                   placeholder="+91 XXXXX XXXXX"
                 />
               </div>
@@ -292,7 +292,7 @@ export default function SignUp() {
                     required
                     value={dateOfBirth}
                     onChange={(e) => setDateOfBirth(e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2  focus:border-transparent"
                   />
                 </div>
 
@@ -306,7 +306,7 @@ export default function SignUp() {
                     required
                     value={timeOfBirth}
                     onChange={(e) => setTimeOfBirth(e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2  focus:border-transparent"
                   />
                 </div>
               </div>
@@ -321,7 +321,7 @@ export default function SignUp() {
                   required
                   value={placeOfBirth}
                   onChange={(e) => setPlaceOfBirth(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2  focus:border-transparent"
                   placeholder="City, State, Country"
                 />
               </div>
@@ -336,7 +336,7 @@ export default function SignUp() {
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   rows={3}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2  focus:border-transparent"
                   placeholder="House/Street, Area, City, State, PIN, Country"
                 />
               </div>
@@ -351,7 +351,7 @@ export default function SignUp() {
                   required
                   value={occupation}
                   onChange={(e) => setOccupation(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2  focus:border-transparent"
                   placeholder="Your current profession"
                 />
               </div>
@@ -366,7 +366,7 @@ export default function SignUp() {
                   required
                   value={referredBy}
                   onChange={(e) => setReferredBy(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2  focus:border-transparent"
                   placeholder="Friend, family, social media, etc."
                 />
               </div>
@@ -381,7 +381,7 @@ export default function SignUp() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2  focus:border-transparent"
                   placeholder="Create a strong password"
                   minLength={6}
                 />
@@ -391,7 +391,7 @@ export default function SignUp() {
               <button
                 type="submit"
                 disabled={loading || selectedServices.length === 0}
-                className="w-full bg-gradient-to-r from-orange-600 to-orange-500 text-white py-3 px-4 rounded-lg font-semibold hover:from-orange-700 hover:to-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition"
+                className="w-full bg-gradient-to-r  text-white py-3 px-4 rounded-lg font-semibold  focus:outline-none focus:ring-2  focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition"
               >
                 {loading ? 'Creating Account...' : 'Sign Up'}
               </button>
@@ -400,7 +400,7 @@ export default function SignUp() {
             <div className="mt-6 text-center">
               <p className="text-gray-600">
                 Already have an account?{' '}
-                <Link href="/auth/login" className="text-orange-600 font-semibold hover:text-orange-700">
+                <Link href="/auth/login" className=" font-semibold hover:">
                   Login here
                 </Link>
               </p>
@@ -417,3 +417,4 @@ export default function SignUp() {
     </>
   )
 }
+

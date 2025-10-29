@@ -37,14 +37,12 @@ if (-not (Test-Path 'node_modules')) {
   & $NpmCmd install
 }
 
-# Build if .next is missing or older than package.json
-$needsBuild = $true
-if (Test-Path '.next') {
-  try { $needsBuild = $false } catch {}
-}
-if ($needsBuild) {
-  Write-Host 'Building Next.js app (this may take a minute)...'
-  & $NodeExe node_modules/next/dist/bin/next build
+# Always create a fresh production build to ensure `next start` succeeds
+Write-Host 'Building Next.js app (prod build)...'
+& $NodeExe node_modules/next/dist/bin/next build
+if ($LASTEXITCODE -ne 0) {
+  Write-Error "Next.js build failed (exit $LASTEXITCODE). Aborting start."
+  exit 1
 }
 
 Write-Host 'Launching next start...'
