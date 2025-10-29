@@ -9,7 +9,220 @@ import { useState, useEffect, useRef } from 'react'
 import { FaWhatsapp, FaPhone, FaEnvelope } from 'react-icons/fa'
 import { supabase } from '@/lib/supabase'
 
-// Interactive Stories Carousel Component  
+// 3D Coverflow Carousel Component
+function CoverflowCarousel() {
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [isPaused, setIsPaused] = useState(false)
+  
+  // Sacred images for Pooja, Homa, and Astrology
+  const images = [
+    { src: '/images/sacred-1.jpg', alt: 'Sacred Pooja Ceremony', title: 'Divine Pooja' },
+    { src: '/images/sacred-2.jpg', alt: 'Holy Homa Ritual', title: 'Sacred Homa' },
+    { src: '/images/sacred-3.jpg', alt: 'Vedic Astrology', title: 'Vedic Astrology' },
+    { src: '/images/sacred-4.jpg', alt: 'Temple Worship', title: 'Temple Rituals' },
+    { src: '/images/sacred-5.jpg', alt: 'Sacred Fire Ceremony', title: 'Fire Ceremony' },
+    { src: '/images/sacred-6.jpg', alt: 'Spiritual Blessings', title: 'Divine Blessings' },
+  ]
+
+  const totalSlides = images.length
+
+  // Auto-advance slides
+  useEffect(() => {
+    if (!isPaused) {
+      const timer = setInterval(() => {
+        setCurrentIndex((prev) => (prev + 1) % totalSlides)
+      }, 4000)
+      return () => clearInterval(timer)
+    }
+  }, [isPaused, totalSlides])
+
+  const goToNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % totalSlides)
+  }
+
+  const goToPrevious = () => {
+    setCurrentIndex((prev) => (prev - 1 + totalSlides) % totalSlides)
+  }
+
+  const goToSlide = (index: number) => {
+    setCurrentIndex(index)
+  }
+
+  // Calculate position and styling for each slide
+  const getSlideStyle = (index: number) => {
+    const diff = index - currentIndex
+    const absDiff = Math.abs(diff)
+    
+    // Normalize diff for circular positioning
+    let normalizedDiff = diff
+    if (absDiff > totalSlides / 2) {
+      normalizedDiff = diff > 0 ? diff - totalSlides : diff + totalSlides
+    }
+
+    const isCenter = normalizedDiff === 0
+    const isNext = normalizedDiff === 1
+    const isPrev = normalizedDiff === -1
+    
+    let transform = ''
+    let zIndex = 0
+    let opacity = 0
+    let scale = 0.6
+
+    if (isCenter) {
+      // Center image: forward and larger
+      transform = 'translateX(0%) translateZ(200px) scale(1.2)'
+      zIndex = 30
+      opacity = 1
+      scale = 1.2
+    } else if (isNext) {
+      // Next image: right and smaller
+      transform = 'translateX(70%) translateZ(0px) scale(0.85) rotateY(-25deg)'
+      zIndex = 20
+      opacity = 0.7
+    } else if (isPrev) {
+      // Previous image: left and smaller
+      transform = 'translateX(-70%) translateZ(0px) scale(0.85) rotateY(25deg)'
+      zIndex = 20
+      opacity = 0.7
+    } else if (absDiff === 2 || (absDiff > totalSlides / 2 && absDiff < totalSlides - 1)) {
+      // Hidden slides further away
+      transform = normalizedDiff > 0 
+        ? 'translateX(120%) translateZ(-100px) scale(0.6) rotateY(-35deg)'
+        : 'translateX(-120%) translateZ(-100px) scale(0.6) rotateY(35deg)'
+      zIndex = 10
+      opacity = 0.3
+    } else {
+      // Completely hidden
+      opacity = 0
+      zIndex = 0
+    }
+
+    return {
+      transform,
+      zIndex,
+      opacity,
+      transition: 'all 0.7s cubic-bezier(0.4, 0.0, 0.2, 1)',
+    }
+  }
+
+  return (
+    <section 
+      className="py-20 overflow-hidden"
+      style={{ background: 'linear-gradient(to bottom, #E0F5F5, #ffffff)' }}
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: '#009688' }}>
+            Sacred Services Gallery
+          </h2>
+          <p className="text-xl text-gray-600">Experience the divine through our spiritual ceremonies</p>
+        </div>
+
+        {/* Coverflow Container */}
+        <div className="relative" style={{ height: '500px', perspective: '1200px' }}>
+          <div className="absolute inset-0 flex items-center justify-center">
+            {images.map((image, index) => {
+              const style = getSlideStyle(index)
+              return (
+                <div
+                  key={index}
+                  className="absolute cursor-pointer"
+                  style={{
+                    ...style,
+                    width: '400px',
+                    maxWidth: '90vw',
+                    height: '320px',
+                    transformStyle: 'preserve-3d',
+                  }}
+                  onClick={() => goToSlide(index)}
+                >
+                  <div 
+                    className="w-full h-full rounded-2xl shadow-2xl overflow-hidden"
+                    style={{
+                      border: index === currentIndex ? '4px solid #F7C948' : '4px solid transparent',
+                      boxShadow: index === currentIndex 
+                        ? '0 20px 60px rgba(0, 150, 136, 0.4)' 
+                        : '0 10px 30px rgba(0, 0, 0, 0.3)',
+                    }}
+                  >
+                    {/* Placeholder gradient since images don't exist yet */}
+                    <div 
+                      className="w-full h-full flex items-center justify-center text-white text-4xl font-bold"
+                      style={{
+                        background: `linear-gradient(135deg, 
+                          ${index % 3 === 0 ? '#009688, #00796B' : 
+                            index % 3 === 1 ? '#F7C948, #F9A825' : 
+                            '#FF6F00, #E65100'})`,
+                      }}
+                    >
+                      <div className="text-center">
+                        <div className="text-7xl mb-4">
+                          {index % 3 === 0 ? '🙏' : index % 3 === 1 ? '🔥' : '⭐'}
+                        </div>
+                        <div className="text-2xl">{image.title}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+
+          {/* Navigation Buttons */}
+          <button
+            onClick={goToPrevious}
+            className="absolute left-4 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full shadow-xl flex items-center justify-center text-3xl font-bold transition-all hover:scale-110 z-40"
+            style={{ 
+              background: 'linear-gradient(135deg, #009688, #00796B)',
+              color: 'white',
+            }}
+            aria-label="Previous slide"
+          >
+            ‹
+          </button>
+          <button
+            onClick={goToNext}
+            className="absolute right-4 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full shadow-xl flex items-center justify-center text-3xl font-bold transition-all hover:scale-110 z-40"
+            style={{ 
+              background: 'linear-gradient(135deg, #009688, #00796B)',
+              color: 'white',
+            }}
+            aria-label="Next slide"
+          >
+            ›
+          </button>
+        </div>
+
+        {/* Navigation Dots */}
+        <div className="flex justify-center space-x-3 mt-12">
+          {images.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className="transition-all duration-300 rounded-full"
+              style={{
+                width: index === currentIndex ? '40px' : '12px',
+                height: '12px',
+                background: index === currentIndex ? '#F7C948' : '#009688',
+                opacity: index === currentIndex ? 1 : 0.5,
+              }}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
+
+        {/* Instructions */}
+        <div className="mt-8 text-center text-gray-500 text-sm">
+          <p>Click on images to view • Auto-rotates every 4 seconds • Hover to pause</p>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// Original Stories Carousel Component (keeping for reference)
 function StoriesCarousel() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
@@ -317,8 +530,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Interactive Stories Carousel */}
-        <StoriesCarousel />
+        {/* 3D Coverflow Sacred Images Gallery */}
+        <CoverflowCarousel />
 
         {/* Stats Section */}
         <section className="py-16 text-white" style={{background: '#088F8F'}}>
