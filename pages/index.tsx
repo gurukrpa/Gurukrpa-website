@@ -12,7 +12,6 @@ import { supabase } from '@/lib/supabase'
 // 3D Coverflow Carousel Component
 function CoverflowCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [isPaused, setIsPaused] = useState(false)
   
   // Sacred images for Pooja, Homa, and Astrology
   const images = [
@@ -26,15 +25,13 @@ function CoverflowCarousel() {
 
   const totalSlides = images.length
 
-  // Auto-advance slides
+  // Auto-advance slides every 4 seconds
   useEffect(() => {
-    if (!isPaused) {
-      const timer = setInterval(() => {
-        setCurrentIndex((prev) => (prev + 1) % totalSlides)
-      }, 4000)
-      return () => clearInterval(timer)
-    }
-  }, [isPaused, totalSlides])
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % totalSlides)
+    }, 4000)
+    return () => clearInterval(timer)
+  }, [totalSlides])
 
   const goToNext = () => {
     setCurrentIndex((prev) => (prev + 1) % totalSlides)
@@ -109,8 +106,6 @@ function CoverflowCarousel() {
     <section 
       className="py-20 overflow-hidden"
       style={{ background: 'linear-gradient(to bottom, #E0F5F5, #ffffff)' }}
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
     >
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
