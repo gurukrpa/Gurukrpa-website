@@ -26,7 +26,7 @@ Each session is deeply personal — we study your birth chart with care to under
 
 Through compassionate analysis and practical remedies, Gurukrpa helps you gain clarity in confusion and direction in destiny — empowering you to live in alignment with cosmic truth.`,
     image: 'https://images.unsplash.com/photo-1532009877282-3340270e0529?w=800&q=80',
-    benefits: ['Personalized birth chart analysis', 'Life path clarity and direction', 'Practical Vedic remedies']
+    benefits: ['Divine Guidance', 'Life Clarity', 'Spiritual Awareness']
   },
   'prashna-consultation': {
     title: 'Prashna Consultation',
@@ -39,7 +39,7 @@ This method is deeply devotional, confidential, and precise.
 
 Whether it's about relationships, opportunities, or challenges, Gurukrpa helps you receive direction straight from cosmic intelligence — giving you confidence and peace to move forward with faith.`,
     image: 'https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=800&q=80',
-    benefits: ['Instant divine answers', 'Confidential and precise guidance', 'Clarity on specific questions']
+    benefits: ['Instant Answers', 'Divine Insight', 'Peace of Mind']
   },
   'muhurtha-consultation': {
     title: 'Muhurtha Consultation',
@@ -52,7 +52,7 @@ Each muhurtha is chosen through careful calculation of nakshatras, tithis, and p
 
 Gurukrpa ensures your sacred start carries divine blessings, aligning your journey with peace, prosperity, and grace.`,
     image: 'https://images.unsplash.com/photo-1607827448387-a67db1383b59?w=800&q=80',
-    benefits: ['Perfect timing for life events', 'Nakshatra and tithi calculation', 'Divine blessings assured']
+    benefits: ['Auspicious Timing', 'Success Alignment', 'Prosperity Blessing']
   },
   'group-pooja-homa': {
     title: 'Group Pooja/Homa Participation',
@@ -65,7 +65,7 @@ Your individual sankalpa (intention) is offered into the ritual, joining the col
 
 Each ceremony is performed with authentic Vedic chanting, invoking Agni and the Devas to bless all participants with health, harmony, and spiritual upliftment.`,
     image: 'https://images.unsplash.com/photo-1609619385002-f40b59a44921?w=800&q=80',
-    benefits: ['Collective divine energy', 'Personal sankalpa offered', 'Authentic Vedic rituals']
+    benefits: ['Collective Energy', 'Sacred Protection', 'Divine Grace']
   },
   'custom-pooja-ceremony': {
     title: 'Custom Pooja Ceremony',
@@ -80,7 +80,7 @@ We handle all arrangements — from selecting the muhurtha to preparing material
 
 Performed at home or online, each Gurukrpa pooja becomes a bridge between your heart and the Divine.`,
     image: 'https://images.unsplash.com/photo-1548625149-fc4a29cf7092?w=800&q=80',
-    benefits: ['Tailored to your intentions', 'Complete arrangement handled', 'Home or online options']
+    benefits: ['Personalized Ritual', 'Inner Peace', 'Divine Connection']
   },
   'marriage-match-making': {
     title: 'Marriage Match Making',
@@ -95,7 +95,7 @@ Our goal is not merely matching charts but creating a foundation for a joyful an
 
 Through Gurukrpa, you receive divine clarity before one of life's most sacred commitments.`,
     image: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80',
-    benefits: ['Complete horoscope analysis', 'Guna milan and dosha check', 'Spiritual compatibility insight']
+    benefits: ['Soul Harmony', 'Lifelong Bond', 'Blessed Union']
   },
   'garbha-sanskar-astrology': {
     title: 'Garbha Sanskar Astrology',
@@ -110,7 +110,7 @@ Every recommendation — from auspicious colors to daily rituals — is given wi
 
 Through this process, Gurukrpa helps parents welcome a soul into the world surrounded by divine protection and love.`,
     image: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=800&q=80',
-    benefits: ['Personalized prenatal guidance', 'Mantra and meditation support', 'Divine protection for baby']
+    benefits: ['Divine Nurturing', 'Peaceful Pregnancy', 'Sacred Bond']
   },
   'prashna-classes': {
     title: 'Prashna One-on-One Classes',
@@ -123,7 +123,7 @@ You'll learn to cast Prashna charts, interpret planetary messages, and apply Ved
 
 Each class nurtures both knowledge and spiritual insight, helping you become not just a reader of charts — but a true seeker who listens to the divine voice behind them.`,
     image: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=800&q=80',
-    benefits: ['Classical text-based learning', 'Personalized pace and attention', 'Spiritual and technical mastery']
+    benefits: ['Ancient Wisdom', 'Intuitive Skill', 'Sacred Learning']
   },
   'astrology-classes': {
     title: 'Astrology One-on-One Classes',
@@ -138,7 +138,7 @@ You'll not only gain technical skill but also the humility and insight that come
 
 Gurukrpa's mentorship helps you see astrology as the ancient light guiding your dharma and destiny.`,
     image: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=800&q=80',
-    benefits: ['Foundation to advanced learning', 'Real-life chart practice', 'Spiritual Jyotisha mentorship']
+    benefits: ['Vedic Knowledge', 'Spiritual Growth', 'Practical Mastery']
   },
   'astro-prashna-group-class': {
     title: 'Astro/Prashna Group Class',
@@ -153,7 +153,7 @@ The environment is joyful, devotional, and inclusive — more like a satsang tha
 
 Through Gurukrpa's guidance, every student becomes part of a growing family united by light, wisdom, and reverence for the stars.`,
     image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&q=80',
-    benefits: ['Community-based learning', 'Theory and case studies', 'Satsang-like environment']
+    benefits: ['Shared Learning', 'Divine Community', 'Enlightened Insight']
   },
 }
 

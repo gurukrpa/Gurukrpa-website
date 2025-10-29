@@ -42,6 +42,7 @@ export default function SignUp() {
   const [selectedServices, setSelectedServices] = useState<string[]>([])
   const [servicesOpen, setServicesOpen] = useState(false)
   const [serviceQuery, setServiceQuery] = useState('')
+  const [numberOfCharts, setNumberOfCharts] = useState('1')
   const dropdownRef = useRef<HTMLDivElement | null>(null)
 
   // Small services list shown as tiles (moved to module scope for stability)
@@ -92,6 +93,7 @@ export default function SignUp() {
             occupation: occupation,
             referred_by: referredBy,
             selected_services: selectedServices,
+            number_of_charts: numberOfCharts,
           },
         },
       })
@@ -146,71 +148,100 @@ export default function SignUp() {
                 <Image src="/images/gurukrpa-logo.jpg" alt="Gurukrpa Logo" fill sizes="80px" className="object-cover" style={{ transform: 'scale(1.07)' }} priority />
               </div>
               <Wordmark className="text-4xl md:text-5xl mb-2" />
-              {/* Service Selection (Dropdown multi-select) */}
-              <div className="mt-4" ref={dropdownRef}>
-                <h3 className="text-base font-semibold text-gray-800 mb-2">Select Services You're Interested In:</h3>
-                <div className="relative">
-                  <button
-                    type="button"
-                    onClick={() => setServicesOpen(o => !o)}
-                    className={`w-full flex items-center justify-between rounded-lg border px-4 py-3 text-left ${selectedServices.length === 0 ? 'border-gray-300' : ''}`}
-                    style={{ background: '#ECF9F6' }}
-                  >
-                    <span className="text-gray-700 truncate">
-                      {selectedServices.length === 0 ? 'Choose one or more services' : `${selectedServices.length} selected`}
-                    </span>
-                    <svg className={`w-4 h-4 ml-2 transition-transform ${servicesOpen ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.048l3.71-3.817a.75.75 0 111.08 1.04l-4.24 4.368a.75.75 0 01-1.08 0L5.25 8.27a.75.75 0 01-.02-1.06z" clipRule="evenodd" />
-                    </svg>
-                  </button>
+              
+              {/* Service and Charts Selection - Side by Side */}
+              <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4" ref={dropdownRef}>
+                {/* Service Selection */}
+                <div>
+                  <h3 className="text-sm font-semibold text-gray-800 mb-2">Select Services:</h3>
+                  <div className="relative">
+                    <button
+                      type="button"
+                      onClick={() => setServicesOpen(o => !o)}
+                      className={`w-full flex items-center justify-between rounded-lg border px-3 py-2.5 text-left text-sm ${selectedServices.length === 0 ? 'border-gray-300' : ''}`}
+                      style={{ background: '#ECF9F6' }}
+                    >
+                      <span className="text-gray-700 truncate">
+                        {selectedServices.length === 0 ? 'Choose services' : `${selectedServices.length} selected`}
+                      </span>
+                      <svg className={`w-4 h-4 ml-2 transition-transform ${servicesOpen ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.048l3.71-3.817a.75.75 0 111.08 1.04l-4.24 4.368a.75.75 0 01-1.08 0L5.25 8.27a.75.75 0 01-.02-1.06z" clipRule="evenodd" />
+                      </svg>
+                    </button>
 
-                  {servicesOpen && (
-                    <div className="absolute z-20 mt-2 w-full rounded-lg border shadow-lg" style={{ background: '#ECF9F6' }}>
-                      <div className="p-2 border-b  ">
-                        <input
-                          type="text"
-                          value={serviceQuery}
-                          onChange={(e) => setServiceQuery(e.target.value)}
-                          placeholder="Search services..."
-                          className="w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-1 "
-                        />
-                      </div>
-                      <div className="max-h-64 overflow-auto p-2 space-y-1">
-                        {services
-                          .filter(s => s.name.toLowerCase().includes(serviceQuery.trim().toLowerCase()))
-                          .map(({ name, Icon }) => (
-                            <label key={name} className="flex items-center gap-3 p-2 rounded-md hover: cursor-pointer">
-                              <input
-                                type="checkbox"
-                                className="h-4 w-4 "
-                                checked={selectedServices.includes(name)}
-                                onChange={() => toggleService(name)}
-                              />
-                              <span className="flex items-center gap-2 text-sm text-gray-800">
-                                <span className="inline-flex items-center justify-center h-6 w-6 rounded-full "><Icon size={12} className="text-white" /></span>
-                                {name}
-                              </span>
-                            </label>
-                          ))}
-                        {services.filter(s => s.name.toLowerCase().includes(serviceQuery.trim().toLowerCase())).length === 0 && (
-                          <div className="p-3 text-xs text-gray-500">No matches</div>
-                        )}
-                      </div>
-                      <div className="flex items-center justify-between p-2 border-t bg-gray-50">
-                        <button type="button" className="text-xs text-gray-600 hover:text-gray-800" onClick={clearServices}>Clear</button>
-                        <div className="space-x-2">
-                          <button type="button" className="text-xs  hover:underline" onClick={selectAllServices}>Select all</button>
-                          <button type="button" className="text-xs  text-white px-3 py-1 rounded" onClick={() => setServicesOpen(false)}>Done</button>
+                    {servicesOpen && (
+                      <div className="absolute z-20 mt-2 w-full rounded-lg border shadow-lg" style={{ background: '#ECF9F6' }}>
+                        <div className="p-2 border-b">
+                          <input
+                            type="text"
+                            value={serviceQuery}
+                            onChange={(e) => setServiceQuery(e.target.value)}
+                            placeholder="Search services..."
+                            className="w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-1"
+                          />
+                        </div>
+                        <div className="max-h-64 overflow-auto p-2 space-y-1">
+                          {services
+                            .filter(s => s.name.toLowerCase().includes(serviceQuery.trim().toLowerCase()))
+                            .map(({ name, Icon }) => (
+                              <label key={name} className="flex items-center gap-3 p-2 rounded-md hover:bg-gray-50 cursor-pointer">
+                                <input
+                                  type="checkbox"
+                                  className="h-4 w-4"
+                                  checked={selectedServices.includes(name)}
+                                  onChange={() => toggleService(name)}
+                                />
+                                <span className="flex items-center gap-2 text-sm text-gray-800">
+                                  <span className="inline-flex items-center justify-center h-6 w-6 rounded-full bg-teal-600"><Icon size={12} className="text-white" /></span>
+                                  {name}
+                                </span>
+                              </label>
+                            ))}
+                          {services.filter(s => s.name.toLowerCase().includes(serviceQuery.trim().toLowerCase())).length === 0 && (
+                            <div className="p-3 text-xs text-gray-500">No matches</div>
+                          )}
+                        </div>
+                        <div className="flex items-center justify-between p-2 border-t bg-gray-50">
+                          <button type="button" className="text-xs text-gray-600 hover:text-gray-800" onClick={clearServices}>Clear</button>
+                          <div className="space-x-2">
+                            <button type="button" className="text-xs text-teal-600 hover:underline" onClick={selectAllServices}>Select all</button>
+                            <button type="button" className="text-xs bg-teal-600 text-white px-3 py-1 rounded" onClick={() => setServicesOpen(false)}>Done</button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
+                  <p className="text-xs text-gray-500 mt-1">
+                    {selectedServices.length === 0
+                      ? 'Please select at least one'
+                      : selectedServices.slice(0, 2).join(', ') + (selectedServices.length > 2 ? ` +${selectedServices.length - 2}` : '')}
+                  </p>
                 </div>
-                <p className="text-xs text-gray-500 mt-1.5">
-                  {selectedServices.length === 0
-                    ? 'Please select at least one service'
-                    : selectedServices.slice(0, 3).join(', ') + (selectedServices.length > 3 ? ` +${selectedServices.length - 3} more` : '')}
-                </p>
+
+                {/* Number of Charts Selection */}
+                <div>
+                  <h3 className="text-sm font-semibold text-gray-800 mb-2">Number of Charts:</h3>
+                  <select
+                    value={numberOfCharts}
+                    onChange={(e) => setNumberOfCharts(e.target.value)}
+                    className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                    style={{ background: '#ECF9F6' }}
+                  >
+                    <option value="1">1 Chart</option>
+                    <option value="2">2 Charts</option>
+                    <option value="3">3 Charts</option>
+                    <option value="4">4 Charts</option>
+                    <option value="5">5 Charts</option>
+                    <option value="6">6 Charts</option>
+                    <option value="7">7 Charts</option>
+                    <option value="8">8 Charts</option>
+                    <option value="9">9 Charts</option>
+                    <option value="10">10 Charts</option>
+                  </select>
+                  <p className="text-xs text-gray-500 mt-1">
+                    How many charts to analyze
+                  </p>
+                </div>
               </div>
             </div>
 
