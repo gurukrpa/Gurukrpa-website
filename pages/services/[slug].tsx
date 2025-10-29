@@ -221,16 +221,16 @@ export default function ServicePage() {
         </section>
 
         {/* Content Section */}
-        <section className="py-16" style={{ background: '#9FE2BF' }}>
+        <section className="py-8" style={{ background: '#9FE2BF' }}>
           <div className="container mx-auto px-4 max-w-4xl">
             {/* Main Content */}
-            <div style={{ background: '#ECF9F6' }} className="rounded-2xl shadow-lg p-8 md:p-12 mb-12">
-              <h2 className="text-3xl font-bold mb-8 text-center" style={{ color: '#009688' }}>
+            <div style={{ background: '#ECF9F6' }} className="rounded-2xl shadow-lg p-6 md:p-8 mb-8">
+              <h2 className="text-2xl font-bold mb-4 text-center" style={{ color: '#009688' }}>
                 About This Service
               </h2>
-              <div className="prose prose-lg max-w-none">
+              <div className="prose prose-base max-w-none">
                 {service.content.split('\n\n').map((paragraph, index) => (
-                  <p key={index} className="text-lg leading-relaxed mb-6 text-gray-700" style={{ textAlign: 'justify' }}>
+                  <p key={index} className="text-base leading-relaxed mb-4 text-gray-700" style={{ textAlign: 'justify' }}>
                     {paragraph}
                   </p>
                 ))}
@@ -238,34 +238,34 @@ export default function ServicePage() {
             </div>
 
             {/* Benefits Section */}
-            <div style={{ background: '#ECF9F6' }} className="rounded-2xl shadow-lg p-8 md:p-12 mb-12">
-              <h2 className="text-3xl font-bold mb-8 text-center" style={{ color: '#009688' }}>
+            <div style={{ background: '#ECF9F6' }} className="rounded-2xl shadow-lg p-6 md:p-8 mb-8">
+              <h2 className="text-2xl font-bold mb-6 text-center" style={{ color: '#009688' }}>
                 Key Benefits
               </h2>
-              <div className="grid md:grid-cols-3 gap-6">
+              <div className="grid md:grid-cols-3 gap-4">
                 {service.benefits.map((benefit, index) => (
-                  <div key={index} style={{ background: '#ECF9F6' }} className="rounded-xl p-6 shadow-md hover:shadow-xl transition-shadow">
-                    <div className="text-4xl mb-3 text-center">✨</div>
-                    <p className="font-semibold text-gray-800 text-center">{benefit}</p>
+                  <div key={index} style={{ background: '#ECF9F6' }} className="rounded-xl p-4 shadow-md hover:shadow-xl transition-shadow">
+                    <div className="text-3xl mb-2 text-center">✨</div>
+                    <p className="font-semibold text-gray-800 text-center text-sm">{benefit}</p>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* CTA Section */}
-            <div className="text-center bg-gradient-to-r from-teal-600 to-teal-700 text-white rounded-2xl shadow-lg p-8 md:p-12">
-              <h3 className="text-2xl md:text-3xl font-bold mb-4">Ready to Book This Service?</h3>
-              <p className="mb-8 text-lg">Get started on your spiritual journey today</p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="text-center bg-gradient-to-r from-teal-600 to-teal-700 text-white rounded-2xl shadow-lg p-6 md:p-8">
+              <h3 className="text-xl md:text-2xl font-bold mb-3">Ready to Book This Service?</h3>
+              <p className="mb-6 text-base">Get started on your spiritual journey today</p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link
                   href="/auth/signup"
-                  className="bg-white text-teal-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition text-lg"
+                  className="bg-white text-teal-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition text-base"
                 >
                   Book Now
                 </Link>
                 <Link
                   href="/#services"
-                  className="bg-teal-800 text-white px-8 py-4 rounded-lg font-semibold hover:bg-teal-900 transition border-2 border-white text-lg"
+                  className="bg-teal-800 text-white px-6 py-3 rounded-lg font-semibold hover:bg-teal-900 transition border-2 border-white text-base"
                 >
                   View All Services
                 </Link>
