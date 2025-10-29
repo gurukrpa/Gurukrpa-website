@@ -102,7 +102,7 @@ function CoverflowCarousel() {
       transform,
       zIndex,
       opacity,
-      transition: 'all 0.7s cubic-bezier(0.4, 0.0, 0.2, 1)',
+      transition: 'all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
     }
   }
 
@@ -147,10 +147,6 @@ function CoverflowCarousel() {
                       className="object-contain"
                       sizes="(max-width: 768px) 85vw, 320px"
                     />
-                    {/* Title overlay */}
-                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-                      <p className="text-white text-xl font-semibold text-center">{image.title}</p>
-                    </div>
                   </div>
                 </div>
               )
