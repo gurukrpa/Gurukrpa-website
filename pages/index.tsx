@@ -109,7 +109,7 @@ function CoverflowCarousel() {
   return (
     <section 
       className="py-20 overflow-hidden"
-      style={{ background: 'linear-gradient(to bottom, #E0F5F5, #ffffff)' }}
+      style={{ background: 'linear-gradient(to bottom, #9FE2BF, #9FE2BF)' }}
     >
       <div className="container mx-auto px-4">
         {/* Coverflow Container */}
@@ -484,7 +484,7 @@ export default function Home() {
         <CoverflowCarousel />
 
         {/* Services Section */}
-        <section className="py-16" style={{ background: 'linear-gradient(to bottom, #ffffff, #E0F5F5)' }}>
+        <section className="py-16" style={{ background: '#9FE2BF' }}>
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <h2 className="text-4xl font-bold mb-4" style={{ color: '#009688' }}>Our Sacred Services</h2>
@@ -557,7 +557,7 @@ export default function Home() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-16" style={{ background: '#E0F5F5' }}>
+        <section className="py-16" style={{ background: '#9FE2BF' }}>
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-4xl font-bold mb-6" style={{ color: '#088F8F' }}>Ready to Begin Your Spiritual Journey?</h2>
             <p className="text-xl text-gray-700 mb-8">Join thousands of devotees who have experienced divine blessings</p>

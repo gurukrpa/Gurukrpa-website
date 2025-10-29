@@ -73,9 +73,9 @@ export default function Login() {
         <title>Login - Gurukrpa</title>
       </Head>
 
-      <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8" style={{ background: 'linear-gradient(135deg, #E0F5F5 0%, #B8E5E5 50%, #E0F5F5 100%)' }}>
+      <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8" style={{ background: '#9FE2BF' }}>
         <div className="max-w-md w-full">
-          <div className="bg-white rounded-2xl shadow-2xl p-8">
+          <div style={{ background: '#9FE2BF' }} className="rounded-2xl shadow-2xl p-8">
             <div className="text-center mb-8">
               <div className="mx-auto mb-3 h-16 w-16 md:h-20 md:w-20 relative rounded-full overflow-hidden ring-2" style={{ borderColor: '#088F8F' }}>
                 <Image src="/images/gurukrpa-logo.jpg" alt="Gurukrpa Logo" fill sizes="80px" className="object-cover" style={{ transform: 'scale(1.07)' }} priority />
