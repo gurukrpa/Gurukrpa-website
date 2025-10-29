@@ -224,7 +224,7 @@ export default function ServicePage() {
         <section className="py-16" style={{ background: '#9FE2BF' }}>
           <div className="container mx-auto px-4 max-w-4xl">
             {/* Main Content */}
-            <div style={{ background: '#9FE2BF' }} className="rounded-2xl shadow-lg p-8 md:p-12 mb-12">
+            <div style={{ background: '#ECF9F6' }} className="rounded-2xl shadow-lg p-8 md:p-12 mb-12">
               <h2 className="text-3xl font-bold mb-8 text-center" style={{ color: '#009688' }}>
                 About This Service
               </h2>
@@ -238,13 +238,13 @@ export default function ServicePage() {
             </div>
 
             {/* Benefits Section */}
-            <div style={{ background: '#9FE2BF' }} className="rounded-2xl shadow-lg p-8 md:p-12 mb-12">
+            <div style={{ background: '#ECF9F6' }} className="rounded-2xl shadow-lg p-8 md:p-12 mb-12">
               <h2 className="text-3xl font-bold mb-8 text-center" style={{ color: '#009688' }}>
                 Key Benefits
               </h2>
               <div className="grid md:grid-cols-3 gap-6">
                 {service.benefits.map((benefit, index) => (
-                  <div key={index} style={{ background: '#9FE2BF' }} className="rounded-xl p-6 shadow-md hover:shadow-xl transition-shadow">
+                  <div key={index} style={{ background: '#ECF9F6' }} className="rounded-xl p-6 shadow-md hover:shadow-xl transition-shadow">
                     <div className="text-4xl mb-3 text-center">✨</div>
                     <p className="font-semibold text-gray-800 text-center">{benefit}</p>
                   </div>

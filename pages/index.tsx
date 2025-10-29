@@ -518,7 +518,7 @@ export default function Home() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
                   </div>
-                  <div className="p-4 bg-gradient-to-b from-teal-50 to-white">
+                  <div className="p-4" style={{ background: '#ECF9F6' }}>
                     <h3 className="text-center font-semibold text-gray-800 group-hover:text-teal-600 transition-colors" style={{ fontSize: '0.95rem' }}>
                       {service.name}
                     </h3>

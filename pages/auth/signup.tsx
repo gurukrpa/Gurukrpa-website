@@ -140,7 +140,7 @@ export default function SignUp() {
 
       <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8" style={{ background: '#9FE2BF' }}>
         <div className="max-w-3xl w-full">
-          <div style={{ background: '#9FE2BF' }} className="rounded-2xl shadow-2xl p-8">
+          <div style={{ background: '#ECF9F6' }} className="rounded-2xl shadow-2xl p-8">
             <div className="text-center mb-8">
               <div className="mx-auto mb-3 h-16 w-16 md:h-20 md:w-20 relative rounded-full overflow-hidden ring-2 ">
                 <Image src="/images/gurukrpa-logo.jpg" alt="Gurukrpa Logo" fill sizes="80px" className="object-cover" style={{ transform: 'scale(1.07)' }} priority />
@@ -154,7 +154,7 @@ export default function SignUp() {
                     type="button"
                     onClick={() => setServicesOpen(o => !o)}
                     className={`w-full flex items-center justify-between rounded-lg border px-4 py-3 text-left ${selectedServices.length === 0 ? 'border-gray-300' : ''}`}
-                    style={{ background: '#9FE2BF' }}
+                    style={{ background: '#ECF9F6' }}
                   >
                     <span className="text-gray-700 truncate">
                       {selectedServices.length === 0 ? 'Choose one or more services' : `${selectedServices.length} selected`}
@@ -165,7 +165,7 @@ export default function SignUp() {
                   </button>
 
                   {servicesOpen && (
-                    <div className="absolute z-20 mt-2 w-full rounded-lg border shadow-lg" style={{ background: '#9FE2BF' }}>
+                    <div className="absolute z-20 mt-2 w-full rounded-lg border shadow-lg" style={{ background: '#ECF9F6' }}>
                       <div className="p-2 border-b  ">
                         <input
                           type="text"
@@ -222,7 +222,7 @@ export default function SignUp() {
 
             {success && (
               <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                <div style={{ background: '#9FE2BF' }} className="rounded-2xl p-8 max-w-md mx-4 shadow-2xl animate-fadeIn">
+                <div style={{ background: '#ECF9F6' }} className="rounded-2xl p-8 max-w-md mx-4 shadow-2xl animate-fadeIn">
                   <div className="text-center">
                     <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-4">
                       <svg className="h-10 w-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
