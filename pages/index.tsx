@@ -112,13 +112,6 @@ function CoverflowCarousel() {
       style={{ background: 'linear-gradient(to bottom, #E0F5F5, #ffffff)' }}
     >
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: '#009688' }}>
-            Sacred Services Gallery
-          </h2>
-          <p className="text-xl text-gray-600">Experience the divine through our spiritual ceremonies</p>
-        </div>
-
         {/* Coverflow Container */}
         <div className="relative" style={{ height: '450px', perspective: '1200px' }}>
           <div className="absolute inset-0 flex items-center justify-center">
