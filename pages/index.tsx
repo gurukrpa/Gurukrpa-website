@@ -479,7 +479,7 @@ export default function Home() {
         </div>
       </header>
 
-      <main>
+      <main style={{ background: '#9FE2BF' }}>
         {/* 3D Coverflow Sacred Images Gallery */}
         <CoverflowCarousel />
 
@@ -506,7 +506,8 @@ export default function Home() {
                 <Link
                   key={index}
                   href={`/services/${service.slug}`}
-                  className="group block bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+                  className="group block rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+                  style={{ background: '#ECF9F6' }}
                 >
                   <div className="relative h-48 overflow-hidden">
                     <Image
