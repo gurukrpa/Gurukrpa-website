@@ -3,20 +3,34 @@ import { useRouter } from 'next/router'
 import Head from 'next/head'
 import { supabase } from '@/lib/supabase'
 
+interface Chart {
+  id: string
+  user_id: string
+  full_name: string
+  relation: string
+  selected_services: string[]
+  date_of_birth: string | null
+  time_of_birth: string | null
+  place_of_birth: string
+  address: string
+  occupation: string
+  question1: string
+  question2: string
+  question3: string
+  created_at: string
+}
+
 interface User {
   id: string
   email: string
   full_name: string | null
   phone: string | null
-  date_of_birth?: string | null
-  time_of_birth?: string | null
-  place_of_birth?: string | null
-  address?: string | null
-  occupation?: string | null
   referred_by?: string | null
   selected_services?: string[] | null
+  number_of_charts?: number | null
   created_at: string
   last_login: string | null
+  charts?: Chart[]
 }
 
 interface Booking {
@@ -41,6 +55,7 @@ export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<'users' | 'bookings'>('users')
   const [searchTerm, setSearchTerm] = useState('')
   const [serviceStats, setServiceStats] = useState<{ [key: string]: number }>({})
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({})
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
@@ -87,7 +102,7 @@ export default function AdminDashboard() {
         throw new Error(errorData.error || 'Failed to fetch users')
       }
 
-      const data = await response.json()
+  const data = await response.json()
       setUsers(data.users || [])
       
       // Calculate service statistics
@@ -278,48 +293,110 @@ export default function AdminDashboard() {
                   <table className="w-full">
                     <thead>
                       <tr className="border-b-2 border-gray-200">
+                        <th className="text-left py-3 px-4 font-semibold text-gray-700">Actions</th>
                         <th className="text-left py-3 px-4 font-semibold text-gray-700">Name</th>
                         <th className="text-left py-3 px-4 font-semibold text-gray-700">Email</th>
                         <th className="text-left py-3 px-4 font-semibold text-gray-700">Phone</th>
-                        <th className="text-left py-3 px-4 font-semibold text-gray-700">DOB</th>
-                        <th className="text-left py-3 px-4 font-semibold text-gray-700">Birth Time</th>
-                        <th className="text-left py-3 px-4 font-semibold text-gray-700">Birth Place</th>
-                        <th className="text-left py-3 px-4 font-semibold text-gray-700">Address</th>
-                        <th className="text-left py-3 px-4 font-semibold text-gray-700">Occupation</th>
                         <th className="text-left py-3 px-4 font-semibold text-gray-700">Services</th>
                         <th className="text-left py-3 px-4 font-semibold text-gray-700">Referred By</th>
+                        <th className="text-left py-3 px-4 font-semibold text-gray-700">Charts</th>
                         <th className="text-left py-3 px-4 font-semibold text-gray-700">Registered</th>
                       </tr>
                     </thead>
                     <tbody>
                       {filteredUsers.map((user) => (
-                        <tr key={user.id} className="border-b border-gray-100 hover:bg-gray-50">
-                          <td className="py-3 px-4">{user.full_name || 'N/A'}</td>
-                          <td className="py-3 px-4">{user.email}</td>
-                          <td className="py-3 px-4">{user.phone || 'N/A'}</td>
-                          <td className="py-3 px-4">{user.date_of_birth || 'N/A'}</td>
-                          <td className="py-3 px-4">{user.time_of_birth || 'N/A'}</td>
-                          <td className="py-3 px-4 max-w-xs truncate" title={user.place_of_birth || 'N/A'}>{user.place_of_birth || 'N/A'}</td>
-                          <td className="py-3 px-4 max-w-xs truncate" title={user.address || 'N/A'}>{user.address || 'N/A'}</td>
-                          <td className="py-3 px-4">{user.occupation || 'N/A'}</td>
-                          <td className="py-3 px-4 max-w-md">
-                            {user.selected_services && user.selected_services.length > 0 ? (
-                              <div className="flex flex-wrap gap-1">
-                                {user.selected_services.map((service, idx) => (
-                                  <span key={idx} className="inline-block px-2 py-1 text-xs rounded" style={{ backgroundColor: '#E0F5F5', color: '#066666' }}>
-                                    {service}
-                                  </span>
-                                ))}
-                              </div>
-                            ) : (
-                              'N/A'
-                            )}
-                          </td>
-                          <td className="py-3 px-4">{user.referred_by || 'N/A'}</td>
-                          <td className="py-3 px-4">
-                            {new Date(user.created_at).toLocaleDateString('en-IN')}
-                          </td>
-                        </tr>
+                        <>
+                          <tr key={user.id} className="border-b border-gray-100 hover:bg-gray-50">
+                            <td className="py-3 px-4 align-top">
+                              <button
+                                className="px-3 py-1 rounded text-sm font-semibold"
+                                style={{ backgroundColor: '#E0F5F5', color: '#066666' }}
+                                onClick={() => setExpanded((prev) => ({ ...prev, [user.id]: !prev[user.id] }))}
+                              >
+                                {expanded[user.id] ? 'Hide' : 'View'} Charts
+                              </button>
+                            </td>
+                            <td className="py-3 px-4">{user.full_name || 'N/A'}</td>
+                            <td className="py-3 px-4">{user.email}</td>
+                            <td className="py-3 px-4">{user.phone || 'N/A'}</td>
+                            <td className="py-3 px-4 max-w-md">
+                              {user.selected_services && user.selected_services.length > 0 ? (
+                                <div className="flex flex-wrap gap-1">
+                                  {user.selected_services.map((service, idx) => (
+                                    <span key={idx} className="inline-block px-2 py-1 text-xs rounded" style={{ backgroundColor: '#E0F5F5', color: '#066666' }}>
+                                      {service}
+                                    </span>
+                                  ))}
+                                </div>
+                              ) : (
+                                'N/A'
+                              )}
+                            </td>
+                            <td className="py-3 px-4">{user.referred_by || 'N/A'}</td>
+                            <td className="py-3 px-4">{user.number_of_charts ?? (user.charts?.length || 0)}</td>
+                            <td className="py-3 px-4">{new Date(user.created_at).toLocaleDateString('en-IN')}</td>
+                          </tr>
+
+                          {expanded[user.id] && (
+                            <tr>
+                              <td colSpan={8} className="bg-gray-50">
+                                <div className="p-4">
+                                  <div className="font-semibold mb-2">Charts</div>
+                                  {user.charts && user.charts.length > 0 ? (
+                                    <div className="overflow-x-auto">
+                                      <table className="w-full">
+                                        <thead>
+                                          <tr className="border-b border-gray-200 text-sm">
+                                            <th className="text-left py-2 px-3">Person</th>
+                                            <th className="text-left py-2 px-3">Relation</th>
+                                            <th className="text-left py-2 px-3">Services</th>
+                                            <th className="text-left py-2 px-3">DOB</th>
+                                            <th className="text-left py-2 px-3">Time</th>
+                                            <th className="text-left py-2 px-3">Place</th>
+                                            <th className="text-left py-2 px-3">Address</th>
+                                            <th className="text-left py-2 px-3">Occupation</th>
+                                            <th className="text-left py-2 px-3">Q1</th>
+                                            <th className="text-left py-2 px-3">Q2</th>
+                                            <th className="text-left py-2 px-3">Q3</th>
+                                            <th className="text-left py-2 px-3">Created</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          {user.charts.map((c) => (
+                                            <tr key={c.id} className="border-b border-gray-100 align-top">
+                                              <td className="py-2 px-3">{c.full_name}</td>
+                                              <td className="py-2 px-3">{c.relation}</td>
+                                              <td className="py-2 px-3 max-w-xs">
+                                                {c.selected_services && c.selected_services.length > 0 ? (
+                                                  <div className="flex flex-wrap gap-1">
+                                                    {c.selected_services.map((s, i) => (
+                                                      <span key={i} className="inline-block px-2 py-0.5 text-xs rounded" style={{ backgroundColor: '#E0F5F5', color: '#066666' }}>{s}</span>
+                                                    ))}
+                                                  </div>
+                                                ) : '—'}
+                                              </td>
+                                              <td className="py-2 px-3">{c.date_of_birth || '—'}</td>
+                                              <td className="py-2 px-3">{c.time_of_birth || '—'}</td>
+                                              <td className="py-2 px-3 max-w-xs truncate" title={c.place_of_birth}>{c.place_of_birth}</td>
+                                              <td className="py-2 px-3 max-w-xs truncate" title={c.address}>{c.address}</td>
+                                              <td className="py-2 px-3">{c.occupation}</td>
+                                              <td className="py-2 px-3 max-w-xs truncate" title={c.question1}>{c.question1}</td>
+                                              <td className="py-2 px-3 max-w-xs truncate" title={c.question2}>{c.question2}</td>
+                                              <td className="py-2 px-3 max-w-xs truncate" title={c.question3}>{c.question3}</td>
+                                              <td className="py-2 px-3">{new Date(c.created_at).toLocaleDateString('en-IN')}</td>
+                                            </tr>
+                                          ))}
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  ) : (
+                                    <div className="text-sm text-gray-600">No charts for this user.</div>
+                                  )}
+                                </div>
+                              </td>
+                            </tr>
+                          )}
+                        </>
                       ))}
                     </tbody>
                   </table>
