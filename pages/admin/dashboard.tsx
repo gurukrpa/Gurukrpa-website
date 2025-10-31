@@ -122,6 +122,65 @@ export default function AdminDashboard() {
     }
   }
 
+  const exportUser = async (userId: string, email: string) => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession()
+      if (!session) return
+      const resp = await fetch(`/api/admin/users/${userId}/export`, {
+        headers: { Authorization: `Bearer ${session.access_token}` },
+      })
+      if (!resp.ok) {
+        const t = await resp.json().catch(() => ({}))
+        throw new Error(t.error || 'Export failed')
+      }
+      const blob = await resp.blob()
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `user-${email || userId}-export.json`
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+      URL.revokeObjectURL(url)
+    } catch (e) {
+      console.error('Export error', e)
+      alert('Failed to export user file')
+    }
+  }
+
+  const deleteUser = async (userId: string) => {
+    if (!confirm('Delete this customer and all their charts? This cannot be undone.')) return
+    try {
+      const { data: { session } } = await supabase.auth.getSession()
+      if (!session) return
+      const resp = await fetch(`/api/admin/users/${userId}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${session.access_token}` },
+      })
+      if (!resp.ok) {
+        const t = await resp.json().catch(() => ({}))
+        throw new Error(t.error || 'Delete failed')
+      }
+      // Refresh list and stats
+      setUsers((prev) => prev.filter((u) => u.id !== userId))
+      // Optionally recompute service stats quickly
+      setServiceStats((prev) => {
+        const remaining = users.filter((u) => u.id !== userId)
+        const stats: { [key: string]: number } = {}
+        remaining.forEach((u) => {
+          if (u.selected_services) {
+            u.selected_services.forEach((s) => (stats[s] = (stats[s] || 0) + 1))
+          }
+        })
+        return stats
+      })
+      alert('Customer deleted')
+    } catch (e) {
+      console.error('Delete error', e)
+      alert('Failed to delete customer')
+    }
+  }
+
   const fetchBookings = async () => {
     try {
       const { data, error } = await supabase
@@ -307,14 +366,30 @@ export default function AdminDashboard() {
                       {filteredUsers.map((user) => (
                         <>
                           <tr key={user.id} className="border-b border-gray-100 hover:bg-gray-50">
-                            <td className="py-3 px-4 align-top">
-                              <button
-                                className="px-3 py-1 rounded text-sm font-semibold"
-                                style={{ backgroundColor: '#E0F5F5', color: '#066666' }}
-                                onClick={() => setExpanded((prev) => ({ ...prev, [user.id]: !prev[user.id] }))}
-                              >
-                                {expanded[user.id] ? 'Hide' : 'View'} Charts
-                              </button>
+                            <td className="py-3 px-4 align-top space-y-2">
+                              <div className="flex gap-2 flex-wrap">
+                                <button
+                                  className="px-3 py-1 rounded text-sm font-semibold"
+                                  style={{ backgroundColor: '#E0F5F5', color: '#066666' }}
+                                  onClick={() => setExpanded((prev) => ({ ...prev, [user.id]: !prev[user.id] }))}
+                                >
+                                  {expanded[user.id] ? 'Hide' : 'View'} Charts
+                                </button>
+                                <button
+                                  className="px-3 py-1 rounded text-sm font-semibold"
+                                  style={{ backgroundColor: '#F0F7FF', color: '#0B5ED7' }}
+                                  onClick={() => exportUser(user.id, user.email)}
+                                >
+                                  Export
+                                </button>
+                                <button
+                                  className="px-3 py-1 rounded text-sm font-semibold"
+                                  style={{ backgroundColor: '#FDE2E1', color: '#B42318' }}
+                                  onClick={() => deleteUser(user.id)}
+                                >
+                                  Delete
+                                </button>
+                              </div>
                             </td>
                             <td className="py-3 px-4">{user.full_name || 'N/A'}</td>
                             <td className="py-3 px-4">{user.email}</td>
