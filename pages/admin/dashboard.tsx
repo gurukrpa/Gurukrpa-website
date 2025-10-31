@@ -431,9 +431,18 @@ export default function AdminDashboard() {
                             <td className="py-4 px-4 align-top">
                               <div className="flex gap-2 flex-wrap">
                                 <button
-                                  className="px-3 py-2 rounded-lg text-xs font-bold shadow-sm hover:shadow-md transition-all duration-200 transform hover:scale-105"
+                                  className={`px-3 py-2 rounded-lg text-xs font-bold shadow-sm transition-all duration-200 ${
+                                    (user.charts?.length || 0) > 1
+                                      ? 'hover:shadow-md transform hover:scale-105 cursor-pointer'
+                                      : 'opacity-50 cursor-not-allowed'
+                                  }`}
                                   style={{ background: 'linear-gradient(135deg, #ecfeff 0%, #cffafe 100%)', color: '#0891b2', border: '1px solid #a5f3fc' }}
-                                  onClick={() => setExpanded((prev) => ({ ...prev, [user.id]: !prev[user.id] }))}
+                                  onClick={() => {
+                                    if ((user.charts?.length || 0) > 1) {
+                                      setExpanded((prev) => ({ ...prev, [user.id]: !prev[user.id] }))
+                                    }
+                                  }}
+                                  disabled={(user.charts?.length || 0) <= 1}
                                 >
                                   {expanded[user.id] ? '▼ Hide' : '▶ View'} Charts
                                 </button>
@@ -482,7 +491,7 @@ export default function AdminDashboard() {
                             <tr>
                               <td colSpan={8} className="bg-gradient-to-r from-gray-50 to-cyan-50 border-l-4 border-cyan-500">
                                 <div className="p-6">
-                                  <div className="flex items-center gap-2 mb-4">
+                                  <div className="flex items-center gap-3 mb-4">
                                     <span className="text-2xl">📊</span>
                                     <span className="font-bold text-lg text-gray-800">Charts for {user.full_name || user.email}</span>
                                   </div>
