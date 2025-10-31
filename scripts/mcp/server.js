@@ -11,6 +11,7 @@
 */
 
 const { StdioServerTransport, Server } = require('@modelcontextprotocol/sdk');
+const http = require('http');
 const path = require('path');
 const fs = require('fs');
 const { spawn } = require('child_process');
@@ -151,20 +152,57 @@ async function validateHtml({ html, url }) {
 
 // Start MCP server with registered tools
 async function main() {
+  const toolNames = [];
   const server = new Server({ name: 'local-dev-mcp', version: '0.1.0' });
 
-  server.tool('filesystem.listFiles', async (params) => listFiles(params || {}));
-  server.tool('filesystem.readFile', async (params) => readFile(params || {}));
-  server.tool('linter.run', async (params) => runLinter(params || {}));
-  server.tool('model.runJs', async (params) => runJsModel(params || {}));
-  server.tool('model.runPython', async (params) => runPythonModel(params || {}));
-  server.tool('db.supabase', async (params) => supabaseQuery(params || {}));
-  server.tool('api.request', async (params) => apiRequest(params || {}));
-  server.tool('tester.runJest', async (params) => runJest(params || {}));
-  server.tool('web.validateHtml', async (params) => validateHtml(params || {}));
+  const register = (name, handler) => {
+    toolNames.push(name);
+    server.tool(name, handler);
+  };
+
+  register('filesystem.listFiles', async (params) => listFiles(params || {}));
+  register('filesystem.readFile', async (params) => readFile(params || {}));
+  register('linter.run', async (params) => runLinter(params || {}));
+  register('model.runJs', async (params) => runJsModel(params || {}));
+  register('model.runPython', async (params) => runPythonModel(params || {}));
+  register('db.supabase', async (params) => supabaseQuery(params || {}));
+  register('api.request', async (params) => apiRequest(params || {}));
+  register('tester.runJest', async (params) => runJest(params || {}));
+  register('web.validateHtml', async (params) => validateHtml(params || {}));
 
   const transport = new StdioServerTransport();
   await server.connect(transport);
+
+  // Optional: lightweight HTTP status endpoint so localhost:PORT is reachable in a browser
+  // Usage: node scripts/mcp/server.js --status 8787
+  try {
+    const args = process.argv.slice(2);
+    const idx = args.indexOf('--status');
+    const port = idx !== -1 ? Number(args[idx + 1] || 8787) : null;
+    if (port && Number.isFinite(port)) {
+      const statusServer = http.createServer((req, res) => {
+        if (req.url === '/health' || req.url === '/') {
+          const body = JSON.stringify({
+            status: 'ok',
+            transport: 'stdio',
+            server: { name: 'local-dev-mcp', version: '0.1.0' },
+            tools: toolNames,
+            time: new Date().toISOString(),
+          });
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(body);
+        } else {
+          res.writeHead(404, { 'Content-Type': 'text/plain' });
+          res.end('Not found');
+        }
+      });
+      statusServer.listen(port, '0.0.0.0', () => {
+        console.error(`[MCP] Status server listening on http://localhost:${port} (health endpoint)`);
+      });
+    }
+  } catch (e) {
+    console.error('[MCP] Failed to start status server:', e);
+  }
 }
 
 main().catch((e) => {

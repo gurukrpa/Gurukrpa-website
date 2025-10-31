@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "node node_modules/next/dist/bin/next dev",
+    "dev:local": "node node_modules/next/dist/bin/next dev -p 3000 -H 0.0.0.0",
     "build": "node node_modules/next/dist/bin/next build",
     "start": "node node_modules/next/dist/bin/next start",
     "lint": "node node_modules/next/dist/bin/next lint",
@@ -12,6 +13,7 @@
     "format": "npx prettier --write .",
     "test": "jest",
     "mcp:server": "node scripts/mcp/server.js",
+    "mcp:server:status": "node scripts/mcp/server.js --status 8787",
     "delete-users": "node scripts/delete-users.js"
   },
   "dependencies": {
