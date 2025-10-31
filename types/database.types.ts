@@ -7,6 +7,8 @@ export interface Database {
           email: string
           full_name: string | null
           phone: string | null
+          referred_by: string | null
+          number_of_charts: number | null
           created_at: string
           last_login: string | null
         }
@@ -15,6 +17,8 @@ export interface Database {
           email: string
           full_name?: string | null
           phone?: string | null
+          referred_by?: string | null
+          number_of_charts?: number | null
           created_at?: string
           last_login?: string | null
         }
@@ -23,8 +27,60 @@ export interface Database {
           email?: string
           full_name?: string | null
           phone?: string | null
+          referred_by?: string | null
+          number_of_charts?: number | null
           created_at?: string
           last_login?: string | null
+        }
+      }
+      charts: {
+        Row: {
+          id: string
+          user_id: string
+          full_name: string
+          relation: string
+          selected_services: string[]
+          date_of_birth: string
+          time_of_birth: string
+          place_of_birth: string
+          address: string
+          occupation: string
+          question1: string
+          question2: string
+          question3: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          full_name: string
+          relation: string
+          selected_services: string[]
+          date_of_birth: string
+          time_of_birth: string
+          place_of_birth: string
+          address: string
+          occupation: string
+          question1: string
+          question2: string
+          question3: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          full_name?: string
+          relation?: string
+          selected_services?: string[]
+          date_of_birth?: string
+          time_of_birth?: string
+          place_of_birth?: string
+          address?: string
+          occupation?: string
+          question1?: string
+          question2?: string
+          question3?: string
+          created_at?: string
         }
       }
       bookings: {

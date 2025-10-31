@@ -4,8 +4,28 @@ CREATE TABLE IF NOT EXISTS public.users (
     email TEXT UNIQUE NOT NULL,
     full_name TEXT,
     phone TEXT,
+    referred_by TEXT,
+    number_of_charts INTEGER DEFAULT 1,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
     last_login TIMESTAMP WITH TIME ZONE
+);
+
+-- Create charts table to store multiple chart information per user
+CREATE TABLE IF NOT EXISTS public.charts (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    user_id UUID REFERENCES public.users(id) ON DELETE CASCADE NOT NULL,
+    full_name TEXT NOT NULL,
+    relation TEXT NOT NULL,
+    selected_services TEXT[] NOT NULL,
+    date_of_birth DATE NOT NULL,
+    time_of_birth TIME NOT NULL,
+    place_of_birth TEXT NOT NULL,
+    address TEXT NOT NULL,
+    occupation TEXT NOT NULL,
+    question1 TEXT NOT NULL,
+    question2 TEXT NOT NULL,
+    question3 TEXT NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
 -- Create bookings table
@@ -23,7 +43,11 @@ CREATE TABLE IF NOT EXISTS public.bookings (
 
 -- Enable Row Level Security
 ALTER TABLE public.users ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.charts ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.bookings ENABLE ROW LEVEL SECURITY;
+
+-- Create indexes
+CREATE INDEX IF NOT EXISTS idx_charts_user_id ON public.charts(user_id);
 
 -- Create policies for users table
 CREATE POLICY "Users can view their own data" ON public.users
@@ -34,6 +58,19 @@ CREATE POLICY "Users can update their own data" ON public.users
 
 CREATE POLICY "Enable insert for authenticated users only" ON public.users
     FOR INSERT WITH CHECK (auth.uid() = id);
+
+-- Create policies for charts table
+CREATE POLICY "Users can view their own charts" ON public.charts
+    FOR SELECT USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can create their own charts" ON public.charts
+    FOR INSERT WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY "Users can update their own charts" ON public.charts
+    FOR UPDATE USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can delete their own charts" ON public.charts
+    FOR DELETE USING (auth.uid() = user_id);
 
 -- Create policies for bookings table
 CREATE POLICY "Users can view their own bookings" ON public.bookings

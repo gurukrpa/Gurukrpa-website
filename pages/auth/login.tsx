@@ -167,7 +167,7 @@ export default function Login() {
 
             <div className="mt-6 text-center">
               <p className="text-gray-600">
-                Don't have an account?{' '}
+                {"Don't have an account?"}{' '}
                 <Link href="/auth/signup" className="font-semibold hover:underline" style={{ color: '#088F8F' }}>
                   Sign up here
                 </Link>

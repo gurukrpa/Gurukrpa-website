@@ -42,11 +42,13 @@ export default function AdminDashboard() {
   const [searchTerm, setSearchTerm] = useState('')
   const [serviceStats, setServiceStats] = useState<{ [key: string]: number }>({})
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     checkAdmin()
     fetchUsers()
     fetchBookings()
   }, [])
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   const checkAdmin = async () => {
     const { data: { user } } = await supabase.auth.getUser()

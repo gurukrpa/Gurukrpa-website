@@ -21,7 +21,7 @@ function StoriesCarousel() {
     { icon: '??', title: 'Homa Ceremonies', description: 'Sacred fire rituals for prosperity and peace', gradient: 'from-cyan-100 to-teal-200' },
     { icon: '??', title: 'Puja Services', description: 'Divine worship ceremonies for blessings', gradient: 'from-teal-200 to-cyan-100' },
     { icon: '??', title: 'Japa Meditation', description: 'Mantra recitation for inner peace', gradient: 'from-cyan-200 to-teal-100' },
-    { icon: '??', title: 'Spiritual Guidance', description: 'Expert consultations for life'"'"'s journey', gradient: 'from-teal-100 to-cyan-300' },
+  { icon: '??', title: 'Spiritual Guidance', description: "Expert consultations for life's journey", gradient: 'from-teal-100 to-cyan-300' },
     { icon: '??', title: 'Astrology Services', description: 'Vedic astrology readings and guidance', gradient: 'from-cyan-300 to-teal-200' },
     { icon: '??', title: 'Cultural Events', description: 'Traditional celebrations and festivals', gradient: 'from-teal-200 to-cyan-200' },
     { icon: '??', title: 'Vedic Learning', description: 'Ancient wisdom for modern times', gradient: 'from-cyan-100 to-teal-300' },
@@ -164,7 +164,7 @@ function StoriesCarousel() {
             style={{ color: '#088F8F' }}
             aria-label="Previous slide"
           >
-            ‹
+            ï¿½
           </button>
           <button
             onClick={(e) => {
@@ -175,7 +175,7 @@ function StoriesCarousel() {
             style={{ color: '#088F8F' }}
             aria-label="Next slide"
           >
-            ›
+            ï¿½
           </button>
 
           {/* Tap Hint (Mobile) */}
@@ -187,7 +187,7 @@ function StoriesCarousel() {
 
         {/* Instructions */}
         <div className="mt-6 text-center text-gray-500 text-sm">
-          <p>Use arrow keys (?/?) or click left/right to navigate • Auto-advances every 4 seconds</p>
+          <p>Use arrow keys (?/?) or click left/right to navigate ï¿½ Auto-advances every 4 seconds</p>
         </div>
       </div>
     </section>
