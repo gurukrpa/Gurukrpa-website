@@ -148,6 +148,32 @@ export default function AdminDashboard() {
     }
   }
 
+  const exportUserPdf = async (userId: string, email: string) => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession()
+      if (!session) return
+      const resp = await fetch(`/api/admin/users/${userId}/export.pdf`, {
+        headers: { Authorization: `Bearer ${session.access_token}` },
+      })
+      if (!resp.ok) {
+        const t = await resp.json().catch(() => ({}))
+        throw new Error(t.error || 'Export PDF failed')
+      }
+      const blob = await resp.blob()
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `user-${email || userId}-export.pdf`
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+      URL.revokeObjectURL(url)
+    } catch (e) {
+      console.error('Export PDF error', e)
+      alert('Failed to export PDF')
+    }
+  }
+
   const deleteUser = async (userId: string) => {
     if (!confirm('Delete this customer and all their charts? This cannot be undone.')) return
     try {
@@ -378,9 +404,9 @@ export default function AdminDashboard() {
                                 <button
                                   className="px-3 py-1 rounded text-sm font-semibold"
                                   style={{ backgroundColor: '#F0F7FF', color: '#0B5ED7' }}
-                                  onClick={() => exportUser(user.id, user.email)}
+                                  onClick={() => exportUserPdf(user.id, user.email)}
                                 >
-                                  Export
+                                  Export PDF
                                 </button>
                                 <button
                                   className="px-3 py-1 rounded text-sm font-semibold"
